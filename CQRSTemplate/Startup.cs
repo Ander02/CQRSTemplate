@@ -6,6 +6,9 @@ using SQRSEmptyTemplate.Infraestructure;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
 using FluentValidation.AspNetCore;
+using SQRSEmptyTemplate.Infraestructure.Filters;
+using SQRSEmptyTemplate.Infraestructure.Database;
+using SQRSEmptyTemplate.Infraestructure.Exceptions;
 
 namespace SQRSEmptyTemplate
 {

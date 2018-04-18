@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SQRSEmptyTemplate.Infraestructure;
+using SQRSEmptyTemplate.Infraestructure.Database;
 using SQRSEmptyTemplate.Util;
 using System;
 using System.Collections.Generic;

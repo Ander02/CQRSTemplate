@@ -1,10 +1,9 @@
-﻿using SQRSEmptyTemplate.Infraestructure;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SQRSEmptyTemplate.Infraestructure
+namespace SQRSEmptyTemplate.Infraestructure.Exceptions
 {
     public class HttpExceptionHandlerMiddleware
     {

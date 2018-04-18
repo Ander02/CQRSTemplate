@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SQRSEmptyTemplate.Domain;
 
-namespace SQRSEmptyTemplate.Infraestructure
+namespace SQRSEmptyTemplate.Infraestructure.Database
 {
     public class Db : DbContext
     {

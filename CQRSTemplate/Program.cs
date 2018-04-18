@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using SQRSEmptyTemplate.Infraestructure;
 using Microsoft.Extensions.DependencyInjection;
+using SQRSEmptyTemplate.Infraestructure.Database;
 
 namespace SQRSEmptyTemplate
 {
