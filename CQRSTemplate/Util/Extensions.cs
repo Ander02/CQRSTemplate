@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Text;
 
-namespace SQRSEmptyTemplate.Util
+namespace SQRSTemplate.Util
 {
     public static class Extensions
     {

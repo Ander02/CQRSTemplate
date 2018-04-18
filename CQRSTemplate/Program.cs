@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
-using SQRSEmptyTemplate.Infraestructure;
+using SQRSTemplate.Infraestructure;
 using Microsoft.Extensions.DependencyInjection;
-using SQRSEmptyTemplate.Infraestructure.Database;
+using SQRSTemplate.Infraestructure.Database;
 
-namespace SQRSEmptyTemplate
+namespace SQRSTemplate
 {
     public class Program
     {

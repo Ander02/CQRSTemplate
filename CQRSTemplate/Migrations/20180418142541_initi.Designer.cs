@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
-using SQRSEmptyTemplate.Infraestructure.Database;
+using SQRSTemplate.Infraestructure.Database;
 using System;
 
 namespace CQRSTemplate.Migrations

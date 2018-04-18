@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace SQRSEmptyTemplate.Infraestructure.Database
+namespace SQRSTemplate.Infraestructure.Database
 {
     public class DbInitializer
     {

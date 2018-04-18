@@ -1,15 +1,15 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using SQRSEmptyTemplate.Infraestructure;
-using SQRSEmptyTemplate.Infraestructure.Database;
-using SQRSEmptyTemplate.Util;
+using SQRSTemplate.Infraestructure;
+using SQRSTemplate.Infraestructure.Database;
+using SQRSTemplate.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SQRSEmptyTemplate.Features.Sample
+namespace SQRSTemplate.Features.Sample
 {
     public class SearchManySamples
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace SQRSEmptyTemplate.Infraestructure.Exceptions
+namespace SQRSTemplate.Infraestructure.Exceptions
 {
     public class HttpException : Exception
     {

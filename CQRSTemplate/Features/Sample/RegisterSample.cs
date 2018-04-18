@@ -1,13 +1,13 @@
 ﻿using FluentValidation;
 using MediatR;
-using SQRSEmptyTemplate.Infraestructure;
-using SQRSEmptyTemplate.Infraestructure.Database;
+using SQRSTemplate.Infraestructure;
+using SQRSTemplate.Infraestructure.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SQRSEmptyTemplate.Features.Sample
+namespace SQRSTemplate.Features.Sample
 {
     public class RegisterSample
     {
