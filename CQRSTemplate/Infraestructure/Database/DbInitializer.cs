@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using SQRSTemplate.Util;
 
 namespace SQRSTemplate.Infraestructure.Database
 {
