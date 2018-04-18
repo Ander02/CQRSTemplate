@@ -18,7 +18,7 @@ namespace SQRSTemplate.Features.Sample
         }
 
         [HttpPost]
-        public async Task<ActionResult> RegisterEquipament([FromBody] RegisterSample.Command value)
+        public async Task<ActionResult> RegisterSample([FromBody] RegisterSample.Command value)
         {
             var result = await mediator.Send(value);
 
@@ -27,7 +27,15 @@ namespace SQRSTemplate.Features.Sample
 
 
         [HttpGet]
-        public async Task<List<SearchManySamples.Result>> SearchManyEquipments([FromQuery] SearchManySamples.Query query)
+        public async Task<List<SearchManySamples.Result>> SearchManySamples([FromQuery] SearchManySamples.Query query)
+        {
+            var result = await mediator.Send(query);
+
+            return result;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<SearchOneSample.Result> SearchOneSample([FromRoute] SearchOneSample.Query query)
         {
             var result = await mediator.Send(query);
 

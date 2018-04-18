@@ -21,6 +21,7 @@ namespace SQRSTemplate.Features.Sample
             public CommandValidator()
             {
                 //Validations
+                RuleFor(q => q.Content).NotNull().NotEmpty();
             }
         }
 
