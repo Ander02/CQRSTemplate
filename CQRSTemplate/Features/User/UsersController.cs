@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 namespace CQRSTemplate.Features.User
 {
     [Route("/[controller]")]
-    public class UserController : Controller
+    public class UsersController : Controller
     {
         private IMediator mediator;
 
-        public UserController(IMediator mediator)
+        public UsersController(IMediator mediator)
         {
             this.mediator = mediator;
         }
@@ -24,7 +24,6 @@ namespace CQRSTemplate.Features.User
 
             return Created(this.Request.Path.Value + "/" + result.Id, result);
         }
-
 
         [HttpGet]
         public async Task<List<UserViews.FullResult>> SearchMany([FromQuery] SearchMany.Query query)
@@ -40,6 +39,14 @@ namespace CQRSTemplate.Features.User
             var result = await mediator.Send(query);
 
             return result;
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete([FromRoute] Delete.Command command)
+        {
+            await mediator.Send(command);
+
+            return this.StatusCode(204);
         }
     }
 }

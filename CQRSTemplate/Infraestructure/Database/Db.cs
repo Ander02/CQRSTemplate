@@ -10,10 +10,7 @@ namespace CQRSTemplate.Infraestructure.Database
         public DbSet<Message> Messages { get; set; }
         #endregion
 
-        public Db(DbContextOptions options) : base(options)
-        {
-
-        }
+        public Db(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

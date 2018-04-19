@@ -41,5 +41,13 @@ namespace CQRSTemplate.Features.Message
 
             return result;
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete([FromRoute] Delete.Command command)
+        {
+            await mediator.Send(command);
+
+            return this.StatusCode(204);
+        }
     }
 }

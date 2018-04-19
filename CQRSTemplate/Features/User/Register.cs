@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using MediatR;
-using CQRSTemplate.Infraestructure;
 using CQRSTemplate.Infraestructure.Database;
 using System;
 using System.Collections.Generic;

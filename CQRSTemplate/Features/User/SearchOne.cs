@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CQRSTemplate.Infraestructure.Exceptions;
 
 namespace CQRSTemplate.Features.User
 {
@@ -38,15 +39,10 @@ namespace CQRSTemplate.Features.User
             protected override async Task<UserViews.FullResult> HandleCore(Query query)
             {
                 var user = await db.Users.Include(u => u.Messages).Where(u => u.Id.Equals(query.Id)).FirstOrDefaultAsync();
+                
+                if (user == null) throw new NotFoundException("Não foi possível encontrar o usuário com o Id : " + query.Id);
 
-                if (user != null)
-                {
-                    return new UserViews.FullResult(user);
-                }
-                else
-                {
-                    return null;
-                }
+                else return new UserViews.FullResult(user);
             }
         }
     }

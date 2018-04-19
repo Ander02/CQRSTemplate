@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CQRSTemplate.Infraestructure.Exceptions;
 
 namespace CQRSTemplate.Features.Message
 {
@@ -39,14 +40,9 @@ namespace CQRSTemplate.Features.Message
             {
                 var message = await db.Messages.Include(m => m.User).Where(m => m.Id.Equals(query.Id)).FirstOrDefaultAsync();
 
-                if (message != null)
-                {
-                    return new MessageViews.FullResult(message);
-                }
-                else
-                {
-                    return null;
-                }
+                if (message == null) throw new NotFoundException("Não foi possível encontrar a mensagem com o Id : " + query.Id);
+
+                else return new MessageViews.FullResult(message);
             }
         }
     }
