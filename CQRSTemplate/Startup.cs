@@ -2,15 +2,14 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SQRSTemplate.Infraestructure;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
 using FluentValidation.AspNetCore;
-using SQRSTemplate.Infraestructure.Filters;
-using SQRSTemplate.Infraestructure.Database;
-using SQRSTemplate.Infraestructure.Exceptions;
+using CQRSTemplate.Infraestructure.Filters;
+using CQRSTemplate.Infraestructure.Database;
+using CQRSTemplate.Infraestructure.Middlewares;
 
-namespace SQRSTemplate
+namespace CQRSTemplate
 {
     public class Startup
     {

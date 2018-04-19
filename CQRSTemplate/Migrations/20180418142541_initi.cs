@@ -9,7 +9,7 @@ namespace CQRSTemplate.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Sample",
+                name: "Message",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -24,7 +24,7 @@ namespace CQRSTemplate.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Sample");
+                name: "Message");
         }
     }
 }

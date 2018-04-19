@@ -1,12 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SQRSTemplate.Domain;
+﻿using CQRSTemplate.Domain;
+using Microsoft.EntityFrameworkCore;
 
-namespace SQRSTemplate.Infraestructure.Database
+namespace CQRSTemplate.Infraestructure.Database
 {
     public class Db : DbContext
     {
         #region Tables
-        public DbSet<Sample> Sample { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Message> Messages { get; set; }
         #endregion
 
         public Db(DbContextOptions options) : base(options)
@@ -14,9 +15,10 @@ namespace SQRSTemplate.Infraestructure.Database
 
         }
 
-        protected override void OnModelCreating(ModelBuilder m)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            m.Entity<Sample>().ToTable(nameof(Sample));
+            modelBuilder.Entity<User>().ToTable(nameof(User));
+            modelBuilder.Entity<Message>().ToTable(nameof(Message)).HasOne(m => m.User).WithMany(u => u.Messages);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace SQRSTemplate.Infraestructure.Exceptions
+﻿namespace CQRSTemplate.Infraestructure.Exceptions
 {
     public class ExceptionResult
     {

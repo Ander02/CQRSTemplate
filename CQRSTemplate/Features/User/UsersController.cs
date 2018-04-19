@@ -5,20 +5,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SQRSTemplate.Features.Sample
+namespace CQRSTemplate.Features.User
 {
     [Route("/[controller]")]
-    public class SampleController : Controller
+    public class UserController : Controller
     {
         private IMediator mediator;
 
-        public SampleController(IMediator mediator)
+        public UserController(IMediator mediator)
         {
             this.mediator = mediator;
         }
 
         [HttpPost]
-        public async Task<ActionResult> RegisterSample([FromBody] RegisterSample.Command value)
+        public async Task<ActionResult> Register([FromBody] Register.Command value)
         {
             var result = await mediator.Send(value);
 
@@ -27,7 +27,7 @@ namespace SQRSTemplate.Features.Sample
 
 
         [HttpGet]
-        public async Task<List<SearchManySamples.Result>> SearchManySamples([FromQuery] SearchManySamples.Query query)
+        public async Task<List<UserViews.FullResult>> SearchMany([FromQuery] SearchMany.Query query)
         {
             var result = await mediator.Send(query);
 
@@ -35,7 +35,7 @@ namespace SQRSTemplate.Features.Sample
         }
 
         [HttpGet("{id}")]
-        public async Task<SearchOneSample.Result> SearchOneSample([FromRoute] SearchOneSample.Query query)
+        public async Task<UserViews.FullResult> SearchOne([FromRoute] SearchOne.Query query)
         {
             var result = await mediator.Send(query);
 

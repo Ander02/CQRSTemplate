@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using SQRSTemplate.Util;
+using CQRSTemplate.Util;
 
-namespace SQRSTemplate.Infraestructure.Database
+namespace CQRSTemplate.Infraestructure.Database
 {
     public class DbInitializer
     {

@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CQRSTemplate.Infraestructure.Exceptions;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SQRSTemplate.Infraestructure.Exceptions
+namespace CQRSTemplate.Infraestructure.Middlewares
 {
     public class HttpExceptionHandlerMiddleware
     {
@@ -19,7 +20,7 @@ namespace SQRSTemplate.Infraestructure.Exceptions
             {
                 await this.next(context);
             }
-            catch (HttpException e)
+            catch (BaseHttpException e)
             {
                 context.Response.StatusCode = e.StatusCode;
                 context.Response.ContentType = "application/json";

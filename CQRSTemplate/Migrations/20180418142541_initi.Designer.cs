@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
-using SQRSTemplate.Infraestructure.Database;
+using CQRSTemplate.Infraestructure.Database;
 using System;
 
 namespace CQRSTemplate.Migrations
@@ -21,7 +21,7 @@ namespace CQRSTemplate.Migrations
                 .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("SQRSEmptyTemplate.Domain.Sample", b =>
+            modelBuilder.Entity("SQRSEmptyTemplate.Domain.Message", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -30,7 +30,7 @@ namespace CQRSTemplate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sample");
+                    b.ToTable("Message");
                 });
 #pragma warning restore 612, 618
         }

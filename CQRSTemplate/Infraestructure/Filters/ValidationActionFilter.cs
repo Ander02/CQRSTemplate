@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
-using SQRSTemplate.Infraestructure.Exceptions;
+using CQRSTemplate.Infraestructure.Exceptions;
 using System.Linq;
 
-namespace SQRSTemplate.Infraestructure.Filters
+namespace CQRSTemplate.Infraestructure.Filters
 {
     public class ValidationActionFilter : IActionFilter
     {
