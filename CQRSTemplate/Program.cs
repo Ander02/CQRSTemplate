@@ -4,9 +4,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
-using CQRSTemplate.Infraestructure;
 using Microsoft.Extensions.DependencyInjection;
-using CQRSTemplate.Infraestructure.Database;
+using CQRSTemplate.Database;
 
 namespace CQRSTemplate
 {

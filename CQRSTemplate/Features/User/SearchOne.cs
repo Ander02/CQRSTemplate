@@ -2,13 +2,13 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using CQRSTemplate.Infraestructure;
-using CQRSTemplate.Infraestructure.Database;
 using CQRSTemplate.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CQRSTemplate.Infraestructure.Exceptions;
+using CQRSTemplate.Database.Repository.Interface;
 
 namespace CQRSTemplate.Features.User
 {
@@ -29,17 +29,17 @@ namespace CQRSTemplate.Features.User
 
         public class Handler : AsyncRequestHandler<Query, UserViews.FullResult>
         {
-            private readonly Db db;
+            private readonly IUserRepository userRepository;
 
-            public Handler(Db db)
+            public Handler(IUserRepository userRepository)
             {
-                this.db = db;
+                this.userRepository = userRepository;
             }
 
             protected override async Task<UserViews.FullResult> HandleCore(Query query)
             {
-                var user = await db.Users.Include(u => u.Messages).Where(u => u.Id.Equals(query.Id)).FirstOrDefaultAsync();
-                
+                var user = await userRepository.FindByIdAsync(query.Id);
+
                 if (user == null) throw new NotFoundException("Não foi possível encontrar o usuário com o Id : " + query.Id);
 
                 else return new UserViews.FullResult(user);

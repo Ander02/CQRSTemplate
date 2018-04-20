@@ -2,12 +2,12 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using CQRSTemplate.Infraestructure;
-using CQRSTemplate.Infraestructure.Database;
 using CQRSTemplate.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CQRSTemplate.Database.Repository.Interface;
 
 namespace CQRSTemplate.Features.User
 {
@@ -32,25 +32,24 @@ namespace CQRSTemplate.Features.User
 
         public class Handler : AsyncRequestHandler<Query, List<UserViews.FullResult>>
         {
-            private readonly Db db;
+            private readonly IUserRepository userRepository;
 
-            public Handler(Db db)
+            public Handler(IUserRepository userRepository)
             {
-                this.db = db;
+                this.userRepository = userRepository;
             }
 
             protected override async Task<List<UserViews.FullResult>> HandleCore(Query query)
             {
-                var q = db.Users.Include(user => user.Messages).AsQueryable();
+                var q = userRepository.GetEntityQuery();
 
                 if (query.Name != null || query.Name != "")
                 {
-                    q = q.Where(u => u.Name.Contains(query.Name)).AsQueryable();
+                    q = userRepository.FindByNameQuery(q, query.Name);
                 }
-
                 if (query.Age > 0)
                 {
-                    q = q.Where(u => u.Age == query.Age).AsQueryable();
+                    q = userRepository.FindByAgeQuery(q, query.Age);
                 }
 
                 q = q.OrderBy(u => u.Name);

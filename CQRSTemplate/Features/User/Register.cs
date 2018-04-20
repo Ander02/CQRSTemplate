@@ -1,10 +1,11 @@
 ﻿using FluentValidation;
 using MediatR;
-using CQRSTemplate.Infraestructure.Database;
+using CQRSTemplate.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CQRSTemplate.Database.Repository.Interface;
 
 namespace CQRSTemplate.Features.User
 {
@@ -30,11 +31,11 @@ namespace CQRSTemplate.Features.User
 
         public class Handler : AsyncRequestHandler<Command, UserViews.SimpleResult>
         {
-            private readonly Db db;
+            private readonly IUserRepository userRepository;
 
-            public Handler(Db db)
+            public Handler(IUserRepository userRepository)
             {
-                this.db = db;
+                this.userRepository = userRepository;
             }
 
             protected override async Task<UserViews.SimpleResult> HandleCore(Command command)
@@ -46,9 +47,9 @@ namespace CQRSTemplate.Features.User
                     Email = command.Email
                 };
 
-                await db.AddAsync(user);
+                await userRepository.AddAsync(user);
 
-                await db.SaveChangesAsync();
+                await userRepository.SaveChangesAsync();
 
                 return new UserViews.SimpleResult(user);
             }

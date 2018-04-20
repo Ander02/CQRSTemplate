@@ -6,8 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using MediatR;
 using FluentValidation.AspNetCore;
 using CQRSTemplate.Infraestructure.Filters;
-using CQRSTemplate.Infraestructure.Database;
+using CQRSTemplate.Database;
 using CQRSTemplate.Infraestructure.Middlewares;
+using GraphQL;
+using GraphQL.Types;
+using CQRSTemplate.GraphQL.Query;
+using CQRSTemplate.Database.Repository.Interface;
+using CQRSTemplate.Database.Repository;
 
 namespace CQRSTemplate
 {
@@ -35,13 +40,25 @@ namespace CQRSTemplate
                 options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
             });
 
+            //Dababase Injection
             services.AddDbContext<Db>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-
+            //Repository
+            services.AddTransient<IMessageRepository, MessageRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            
             services.AddCors();
             services.AddMediatR(typeof(Startup));
+
+            //GraphQL Dependency injection
+            services.AddScoped<IDocumentExecuter, DocumentExecuter>();
+            var servicesProvider = services.BuildServiceProvider();
+            services.AddScoped<ISchema>(schema => new GraphQLSchema(type => (GraphType)servicesProvider.GetService(type))
+            {
+                Query = servicesProvider.GetService<GraphQLQuery>()
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

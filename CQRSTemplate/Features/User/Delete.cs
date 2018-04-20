@@ -1,4 +1,5 @@
-﻿using CQRSTemplate.Infraestructure.Database;
+﻿using CQRSTemplate.Database;
+using CQRSTemplate.Database.Repository.Interface;
 using CQRSTemplate.Infraestructure.Exceptions;
 using FluentValidation;
 using MediatR;
@@ -27,21 +28,21 @@ namespace CQRSTemplate.Features.User
 
         public class Handler : AsyncRequestHandler<Command>
         {
-            private readonly Db db;
+            private readonly IUserRepository userRepository;
 
-            public Handler(Db db)
+            public Handler(IUserRepository userRepository)
             {
-                this.db = db;
+                this.userRepository = userRepository;
             }
 
             protected override async Task HandleCore(Command command)
             {
-                var user = await db.Users.FindAsync(command.Id);
+                var user = await userRepository.FindByIdAsync(command.Id);
 
                 if (user == null) throw new NotFoundException("Não foi possível encontrar o usuário com o Id : " + command.Id);
 
-                db.Users.Remove(user);
-                await db.SaveChangesAsync();
+                userRepository.Remove(user);
+                await userRepository.SaveChangesAsync();
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿using CQRSTemplate.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace CQRSTemplate.Infraestructure.Database
+namespace CQRSTemplate.Database
 {
     public class Db : DbContext
     {

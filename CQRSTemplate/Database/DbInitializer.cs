@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using CQRSTemplate.Util;
 
-namespace CQRSTemplate.Infraestructure.Database
+namespace CQRSTemplate.Database
 {
     public class DbInitializer
     {
