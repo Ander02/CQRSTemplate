@@ -2,12 +2,12 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using CQRSTemplate.Infraestructure;
-using CQRSTemplate.Infraestructure.Database;
 using CQRSTemplate.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CQRSTemplate.Database.Repository.Interface;
 
 namespace CQRSTemplate.Features.Message
 {
@@ -31,23 +31,23 @@ namespace CQRSTemplate.Features.Message
 
         public class Handler : AsyncRequestHandler<Query, List<MessageViews.FullResult>>
         {
-            private readonly Db db;
+            private readonly IMessageRepository messageRepository;
 
-            public Handler(Db db)
+            public Handler(IMessageRepository messageRepository)
             {
-                this.db = db;
+                this.messageRepository = messageRepository;
             }
 
             protected override async Task<List<MessageViews.FullResult>> HandleCore(Query query)
             {
-                var q = db.Messages.Include(m => m.User).AsQueryable();
+                var q = messageRepository.GetEntityQuery();
 
                 if (query.Title != null || query.Title != "")
                 {
-                    q = q.Where(u => u.Title.Contains(query.Title)).AsQueryable();
+                    q = messageRepository.QueryFindByTitle(q, query.Title);
                 }
 
-                q = q.OrderBy(u => u.Title);
+                q = q.OrderBy(m => m.Title);
                 q = q.Skip(query.Limit * query.Page).Take(query.Limit);
 
                 return (await q.ToListAsync()).Select(m => new MessageViews.FullResult(m)).ToList();

@@ -9,7 +9,7 @@ namespace CQRSTemplate.Database.Repository
 {
     public abstract class BaseRepository<TEntity, TKey> : IBaseRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>, new()
     {
-        protected Db db;
+        protected readonly Db db;
 
         protected BaseRepository(Db db)
         {

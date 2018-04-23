@@ -2,13 +2,13 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using CQRSTemplate.Infraestructure;
-using CQRSTemplate.Infraestructure.Database;
 using CQRSTemplate.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CQRSTemplate.Infraestructure.Exceptions;
+using CQRSTemplate.Database.Repository.Interface;
 
 namespace CQRSTemplate.Features.Message
 {
@@ -29,16 +29,16 @@ namespace CQRSTemplate.Features.Message
 
         public class Handler : AsyncRequestHandler<Query, MessageViews.FullResult>
         {
-            private readonly Db db;
+            private readonly IMessageRepository messageRepository;
 
-            public Handler(Db db)
+            public Handler(IMessageRepository messageRepository)
             {
-                this.db = db;
+                this.messageRepository = messageRepository;
             }
 
             protected override async Task<MessageViews.FullResult> HandleCore(Query query)
             {
-                var message = await db.Messages.Include(m => m.User).Where(m => m.Id.Equals(query.Id)).FirstOrDefaultAsync();
+                var message = await messageRepository.FindByIdAsync(query.Id);
 
                 if (message == null) throw new NotFoundException("Não foi possível encontrar a mensagem com o Id : " + query.Id);
 

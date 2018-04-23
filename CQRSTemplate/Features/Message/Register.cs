@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using MediatR;
 using CQRSTemplate.Infraestructure;
-using CQRSTemplate.Infraestructure.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CQRSTemplate.Database.Repository.Interface;
 
 namespace CQRSTemplate.Features.Message
 {
@@ -31,11 +31,13 @@ namespace CQRSTemplate.Features.Message
 
         public class Handler : AsyncRequestHandler<Command, MessageViews.FullResult>
         {
-            private readonly Db db;
+            private readonly IMessageRepository messageRepository;
+            private readonly IUserRepository userRepository;
 
-            public Handler(Db db)
+            public Handler(IMessageRepository messageRepository, IUserRepository userRepository)
             {
-                this.db = db;
+                this.messageRepository = messageRepository;
+                this.userRepository = userRepository;
             }
 
             protected override async Task<MessageViews.FullResult> HandleCore(Command command)
@@ -44,12 +46,12 @@ namespace CQRSTemplate.Features.Message
                 {
                     Title = command.Title,
                     Content = command.Content,
-                    User = await db.Users.FindAsync(command.UserId)
+                    User = await userRepository.FindByIdAsync(command.UserId)
                 };
 
-                await db.AddAsync(message);
+                await messageRepository.AddAsync(message);
 
-                await db.SaveChangesAsync();
+                await messageRepository.SaveChangesAsync();
 
                 return new MessageViews.FullResult(message);
             }
