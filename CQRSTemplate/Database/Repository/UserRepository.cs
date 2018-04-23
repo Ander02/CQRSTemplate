@@ -24,30 +24,30 @@ namespace CQRSTemplate.Database.Repository
 
         public List<User> FindByName(string name)
         {
-            return this.FindByNameQuery(this.GetEntityQuery(), name).ToList();
+            return this.QueryFindByName(this.GetEntityQuery(), name).ToList();
         }
 
         public async Task<List<User>> FindByNameAsync(string name)
         {
-            return await this.FindByNameQuery(this.GetEntityQuery(), name).ToListAsync();
+            return await this.QueryFindByName(this.GetEntityQuery(), name).ToListAsync();
         }
 
         public List<User> FindByAge(int age)
         {
-            return this.FindByAgeQuery(this.GetEntityQuery(), age).ToList();
+            return this.QueryFindByAge(this.GetEntityQuery(), age).ToList();
         }
 
         public async Task<List<User>> FindByAgeAsync(int age)
         {
-            return await this.FindByAgeQuery(this.GetEntityQuery(), age).ToListAsync();
+            return await this.QueryFindByAge(this.GetEntityQuery(), age).ToListAsync();
         }
 
-        public IQueryable<User> FindByNameQuery(IQueryable<User> query, string name)
+        public IQueryable<User> QueryFindByName(IQueryable<User> query, string name)
         {
             return query.Where(u => u.Name.Equals(name)).AsQueryable();
         }
 
-        public IQueryable<User> FindByAgeQuery(IQueryable<User> query, int age)
+        public IQueryable<User> QueryFindByAge(IQueryable<User> query, int age)
         {
             return query.Where(u => u.Age == age).AsQueryable();
         }

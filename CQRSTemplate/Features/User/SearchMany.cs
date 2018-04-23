@@ -45,11 +45,11 @@ namespace CQRSTemplate.Features.User
 
                 if (query.Name != null || query.Name != "")
                 {
-                    q = userRepository.FindByNameQuery(q, query.Name);
+                    q = userRepository.QueryFindByName(q, query.Name);
                 }
                 if (query.Age > 0)
                 {
-                    q = userRepository.FindByAgeQuery(q, query.Age);
+                    q = userRepository.QueryFindByAge(q, query.Age);
                 }
 
                 q = q.OrderBy(u => u.Name);

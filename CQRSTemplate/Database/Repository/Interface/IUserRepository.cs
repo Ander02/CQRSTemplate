@@ -14,7 +14,7 @@ namespace CQRSTemplate.Database.Repository.Interface
         List<User> FindByAge(int age);
         Task<List<User>> FindByAgeAsync(int age);
 
-        IQueryable<User> FindByNameQuery(IQueryable<User> query, string name);
-        IQueryable<User> FindByAgeQuery(IQueryable<User> query, int age);
+        IQueryable<User> QueryFindByName(IQueryable<User> query, string name);
+        IQueryable<User> QueryFindByAge(IQueryable<User> query, int age);
     }
 }
