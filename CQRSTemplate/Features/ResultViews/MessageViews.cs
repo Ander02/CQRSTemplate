@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.Features.Rest.Message
+namespace CQRSTemplate.Features.ResultViews
 {
     public class MessageViews
     {

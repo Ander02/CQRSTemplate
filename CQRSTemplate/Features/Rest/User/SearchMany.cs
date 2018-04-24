@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CQRSTemplate.Database.Repository.Interface;
+using CQRSTemplate.Features.ResultViews;
 
 namespace CQRSTemplate.Features.Rest.User
 {
@@ -43,7 +44,7 @@ namespace CQRSTemplate.Features.Rest.User
             {
                 var q = userRepository.GetEntityQuery();
 
-                if (query.Name != null || query.Name != "")
+                if (query.Name != null && query.Name.NotEquals(""))
                 {
                     q = userRepository.QueryFindByName(q, query.Name);
                 }

@@ -44,7 +44,7 @@ namespace CQRSTemplate.Database.Repository
 
         public IQueryable<User> QueryFindByName(IQueryable<User> query, string name)
         {
-            return query.Where(u => u.Name.Equals(name)).AsQueryable();
+            return query.Where(u => u.Name.Contains(name)).AsQueryable();
         }
 
         public IQueryable<User> QueryFindByAge(IQueryable<User> query, int age)

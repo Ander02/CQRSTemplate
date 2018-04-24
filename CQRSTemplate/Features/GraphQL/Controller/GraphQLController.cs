@@ -9,10 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.Features.GraphQL.Controllers
+namespace CQRSTemplate.Features.GraphQL.Controller
 {
     [Route("[controller]")]
-    public class GraphQLController : Controller
+    public class GraphQLController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly IMediator mediator;
           
