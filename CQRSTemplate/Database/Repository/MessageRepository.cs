@@ -31,5 +31,10 @@ namespace CQRSTemplate.Database.Repository
         {
             return query.Where(message => message.UserId.Equals(userId)).AsQueryable();
         }
+
+        public IQueryable<Message> QueryFindByContent(IQueryable<Message> query, string content)
+        {
+            return query.Where(message => message.Content.Contains(content)).AsQueryable();
+        }
     }
 }

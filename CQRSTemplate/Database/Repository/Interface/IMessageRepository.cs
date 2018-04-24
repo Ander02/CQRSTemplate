@@ -10,6 +10,10 @@ namespace CQRSTemplate.Database.Repository.Interface
     {
         IQueryable<Message> QueryFindByTitle(IQueryable<Message> query, string title);
 
+        IQueryable<Message> QueryFindByContent(IQueryable<Message> query, string content);
+
         IQueryable<Message> QueryFindByUserId(IQueryable<Message> query, Guid userId);
+
+
     }
 }

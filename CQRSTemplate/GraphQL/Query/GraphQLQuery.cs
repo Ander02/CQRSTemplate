@@ -1,19 +1,19 @@
-﻿using CQRSTemplate.Database.Repository.Interface;
-using CQRSTemplate.Features.GraphQL.Types;
-using CQRSTemplate.Infraestructure.Exceptions;
+﻿using CQRSTemplate.Features.User;
+using CQRSTemplate.GraphQL.Types;
 using GraphQL.Types;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.Features.GraphQL.Query
+namespace CQRSTemplate.GraphQL.Query
 {
     public class GraphQLQuery : ObjectGraphType
     {
         public GraphQLQuery() { }
 
-        public GraphQLQuery(IUserRepository userRepository)
+        public GraphQLQuery(IMediator mediator)
         {
             Name = "Query";
 
@@ -24,7 +24,7 @@ namespace CQRSTemplate.Features.GraphQL.Query
                 description: "The system's users",
                 resolve: (context) =>
                 {
-                    return userRepository.FindAllAsync().Result;
+                    return mediator.Send(new SearchMany.Query() { }).Result;
                 });
 
             Field<UserType>(
@@ -42,13 +42,16 @@ namespace CQRSTemplate.Features.GraphQL.Query
                     try
                     {
                         var userId = context.GetArgument<Guid>("id");
-                        return userRepository.FindByIdAsync(userId).Result;
+                        return mediator.Send(new SearchOne.Query()
+                        {
+                            Id = userId
+                        }).Result;
                     }
                     catch
                     {
                         return null;
                     }
-                }); 
+                });
             #endregion
         }
     }

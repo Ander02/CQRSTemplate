@@ -1,12 +1,11 @@
-﻿using CQRSTemplate.Features.ResultViews;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.Features.Rest.User
+namespace CQRSTemplate.Features.User
 {
     [Route("/[controller]")]
     public class UsersController : Controller

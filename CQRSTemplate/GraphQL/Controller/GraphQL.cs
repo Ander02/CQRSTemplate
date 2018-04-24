@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.Features.GraphQL.Controller
+namespace CQRSTemplate.GraphQL.Controller
 {
     public class GraphQL
     {

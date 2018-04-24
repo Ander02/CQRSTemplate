@@ -8,15 +8,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CQRSTemplate.Database.Repository.Interface;
-using CQRSTemplate.Features.ResultViews;
 
-namespace CQRSTemplate.Features.Rest.Message
+namespace CQRSTemplate.Features.Message
 {
     public class SearchMany
     {
         public class Query : IRequest<List<MessageViews.FullResult>>
         {
             public string Title { get; set; } = "";
+            public string Content { get; set; } = "";
+            public Guid UserId { get; set; }
             public int Limit { get; set; } = 100;
             public int Page { get; set; } = 0;
         }
@@ -43,10 +44,11 @@ namespace CQRSTemplate.Features.Rest.Message
             {
                 var q = messageRepository.GetEntityQuery();
 
-                if (query.Title != null || query.Title != "")
-                {
-                    q = messageRepository.QueryFindByTitle(q, query.Title);
-                }
+                if (query.Title != null && query.Title.NotEquals("")) q = messageRepository.QueryFindByTitle(q, query.Title);
+
+                if (query.Title != null && query.Content.NotEquals("")) q = messageRepository.QueryFindByContent(q, query.Content);
+
+                if (query.UserId != null) q = messageRepository.QueryFindByUserId(q, query.UserId);
 
                 q = q.OrderBy(m => m.Title);
                 q = q.Skip(query.Limit * query.Page).Take(query.Limit);

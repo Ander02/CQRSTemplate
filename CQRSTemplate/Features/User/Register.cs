@@ -6,9 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CQRSTemplate.Database.Repository.Interface;
-using CQRSTemplate.Features.ResultViews;
 
-namespace CQRSTemplate.Features.Rest.User
+namespace CQRSTemplate.Features.User
 {
     public class Register
     {

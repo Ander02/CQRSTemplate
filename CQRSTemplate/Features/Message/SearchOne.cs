@@ -9,9 +9,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CQRSTemplate.Infraestructure.Exceptions;
 using CQRSTemplate.Database.Repository.Interface;
-using CQRSTemplate.Features.ResultViews;
 
-namespace CQRSTemplate.Features.Rest.Message
+namespace CQRSTemplate.Features.Message
 {
     public class SearchOne
     {

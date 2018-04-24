@@ -1,14 +1,11 @@
-﻿using CQRSTemplate.Database;
-using CQRSTemplate.Database.Repository.Interface;
+﻿using CQRSTemplate.Database.Repository.Interface;
 using CQRSTemplate.Infraestructure.Exceptions;
 using FluentValidation;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.Features.Rest.User
+namespace CQRSTemplate.Features.Message
 {
     public class Delete
     {
@@ -28,21 +25,21 @@ namespace CQRSTemplate.Features.Rest.User
 
         public class Handler : AsyncRequestHandler<Command>
         {
-            private readonly IUserRepository userRepository;
+            private readonly IMessageRepository messageRepository;
 
-            public Handler(IUserRepository userRepository)
+            public Handler(IMessageRepository messageRepository)
             {
-                this.userRepository = userRepository;
+                this.messageRepository = messageRepository;
             }
 
             protected override async Task HandleCore(Command command)
             {
-                var user = await userRepository.FindByIdAsync(command.Id);
+                var message = await messageRepository.FindByIdAsync(command.Id);
 
-                if (user == null) throw new NotFoundException("Não foi possível encontrar o usuário com o Id : " + command.Id);
+                if (message == null) throw new NotFoundException("Não foi possível encontrar a mensagem com o Id : " + command.Id);
 
-                userRepository.Remove(user);
-                await userRepository.SaveChangesAsync();
+                messageRepository.Remove(message);
+                await messageRepository.SaveChangesAsync();
             }
         }
     }

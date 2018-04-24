@@ -1,17 +1,17 @@
-﻿using CQRSTemplate.Database.Repository.Interface;
-using CQRSTemplate.Domain;
+﻿using CQRSTemplate.Features.User;
 using GraphQL.Types;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.Features.GraphQL.Types
+namespace CQRSTemplate.GraphQL.Types
 {
-    public class UserType : ObjectGraphType<User>
+    public class UserType : ObjectGraphType<UserViews.FullResult>
     {
-        public UserType(IMessageRepository messageRepository)
+        public UserType(IMediator mediator)
         {
             Name = "User";
             Description = "User Fields";
@@ -27,8 +27,10 @@ namespace CQRSTemplate.Features.GraphQL.Types
                 resolve: (context) =>
                 {
                     var userId = context.Source.Id;
-                    var q = messageRepository.GetEntityQuery();
-                    return messageRepository.QueryFindByUserId(q, userId).ToListAsync().Result;
+                    return mediator.Send(new Features.Message.SearchMany.Query()
+                    {
+                        UserId = userId
+                    }).Result;
                 });
         }
     }

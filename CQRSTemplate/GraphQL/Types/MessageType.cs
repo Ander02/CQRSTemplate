@@ -1,13 +1,14 @@
 ﻿using CQRSTemplate.Domain;
+using CQRSTemplate.Features.Message;
 using GraphQL.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.Features.GraphQL.Types
+namespace CQRSTemplate.GraphQL.Types
 {
-    public class MessageType : ObjectGraphType<Message>
+    public class MessageType : ObjectGraphType<MessageViews.FullResult>
     {
         public MessageType()
         {
@@ -15,5 +16,5 @@ namespace CQRSTemplate.Features.GraphQL.Types
             Field(m => m.Title).Description("The message title");
             Field(m => m.Content).Description("The message content");
         }
-    } 
+    }
 }

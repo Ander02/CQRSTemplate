@@ -8,9 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CQRSTemplate.Database.Repository.Interface;
-using CQRSTemplate.Features.ResultViews;
 
-namespace CQRSTemplate.Features.Rest.User
+namespace CQRSTemplate.Features.User
 {
     public class SearchMany
     {
@@ -44,14 +43,9 @@ namespace CQRSTemplate.Features.Rest.User
             {
                 var q = userRepository.GetEntityQuery();
 
-                if (query.Name != null && query.Name.NotEquals(""))
-                {
-                    q = userRepository.QueryFindByName(q, query.Name);
-                }
-                if (query.Age > 0)
-                {
-                    q = userRepository.QueryFindByAge(q, query.Age);
-                }
+                if (query.Name != null && query.Name.NotEquals("")) q = userRepository.QueryFindByName(q, query.Name);
+
+                if (query.Age > 0) q = userRepository.QueryFindByAge(q, query.Age);
 
                 q = q.OrderBy(u => u.Name);
                 q = q.Skip(query.Limit * query.Page).Take(query.Limit);

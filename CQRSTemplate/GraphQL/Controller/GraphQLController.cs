@@ -1,6 +1,4 @@
-﻿using CQRSTemplate.Features.GraphQL.Query;
-using CQRSTemplate.Infraestructure.Exceptions;
-using GraphQL;
+﻿using GraphQL;
 using GraphQL.Types;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.Features.GraphQL.Controller
+namespace CQRSTemplate.GraphQL.Controller
 {
     [Route("[controller]")]
     public class GraphQLController : Microsoft.AspNetCore.Mvc.Controller

@@ -1,12 +1,11 @@
-﻿using CQRSTemplate.Features.ResultViews;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.Features.Rest.Message
+namespace CQRSTemplate.Features.Message
 {
     [Route("/[controller]")]
     public class MessagesController : Controller
@@ -25,7 +24,6 @@ namespace CQRSTemplate.Features.Rest.Message
 
             return Created(this.Request.Path.Value + "/" + result.Id, result);
         }
-
 
         [HttpGet]
         public async Task<List<MessageViews.FullResult>> SearchMany([FromQuery] SearchMany.Query query)
