@@ -13,6 +13,8 @@ using GraphQL.Types;
 using CQRSTemplate.GraphQL.Query;
 using CQRSTemplate.Database.Repository.Interface;
 using CQRSTemplate.Database.Repository;
+using CQRSTemplate.GraphQL.Schemas;
+using CQRSTemplate.GraphQL.Types;
 
 namespace CQRSTemplate
 {
@@ -45,14 +47,17 @@ namespace CQRSTemplate
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-            //Repository
+            //Repository Injection
             services.AddTransient<IMessageRepository, MessageRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
-            
+
             services.AddCors();
             services.AddMediatR(typeof(Startup));
 
-            //GraphQL Dependency injection
+            //GraphQL Dependency Injection
+            services.AddScoped<GraphQLQuery>();
+            services.AddTransient<UserType>();
+            services.AddTransient<MessageType>();
             services.AddScoped<IDocumentExecuter, DocumentExecuter>();
             var servicesProvider = services.BuildServiceProvider();
             services.AddScoped<ISchema>(schema => new GraphQLSchema(type => (GraphType)servicesProvider.GetService(type))

@@ -16,7 +16,7 @@ namespace CQRSTemplate.Database.Repository
 
         public override async Task<Message> FindByIdAsync(Guid id) => await this.GetEntityQuery().Where(m => m.Id.Equals(id)).FirstOrDefaultAsync();
 
-        public override List<Message> FindAll => this.GetEntityQuery().ToList();
+        public override List<Message> FindAll() => this.GetEntityQuery().ToList();
 
         public override async Task<List<Message>> FindAllAsync() => await this.GetEntityQuery().ToListAsync();
 
@@ -25,6 +25,11 @@ namespace CQRSTemplate.Database.Repository
         public IQueryable<Message> QueryFindByTitle(IQueryable<Message> query, string title)
         {
             return query.Where(message => message.Title.Contains(title)).AsQueryable();
+        }
+
+        public IQueryable<Message> QueryFindByUserId(IQueryable<Message> query, Guid userId)
+        {
+            return query.Where(message => message.UserId.Equals(userId)).AsQueryable();
         }
     }
 }

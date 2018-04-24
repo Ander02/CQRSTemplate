@@ -16,7 +16,7 @@ namespace CQRSTemplate.Database.Repository
 
         public override async Task<User> FindByIdAsync(Guid id) => await this.GetEntityQuery().Where(u => u.Id.Equals(id)).FirstOrDefaultAsync();
         
-        public override List<User> FindAll => this.GetEntityQuery().ToList();
+        public override List<User> FindAll() => this.GetEntityQuery().ToList();
 
         public override async Task<List<User>> FindAllAsync() => await this.GetEntityQuery().ToListAsync();
 

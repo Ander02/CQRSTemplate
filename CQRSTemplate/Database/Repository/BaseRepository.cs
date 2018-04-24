@@ -42,7 +42,7 @@ namespace CQRSTemplate.Database.Repository
             db.Set<TEntity>().Remove(entity);
         }
 
-        public virtual List<TEntity> FindAll => db.Set<TEntity>().ToList();
+        public virtual List<TEntity> FindAll() => db.Set<TEntity>().ToList();
 
         public virtual Task<List<TEntity>> FindAllAsync()
         {

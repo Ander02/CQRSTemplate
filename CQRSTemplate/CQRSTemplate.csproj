@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="GraphQL\Mutation\" />
+    <Folder Include="GraphQL\InputType\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

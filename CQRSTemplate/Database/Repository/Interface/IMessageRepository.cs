@@ -9,5 +9,7 @@ namespace CQRSTemplate.Database.Repository.Interface
     public interface IMessageRepository : IBaseRepository<Message, Guid>
     {
         IQueryable<Message> QueryFindByTitle(IQueryable<Message> query, string title);
+
+        IQueryable<Message> QueryFindByUserId(IQueryable<Message> query, Guid userId);
     }
 }

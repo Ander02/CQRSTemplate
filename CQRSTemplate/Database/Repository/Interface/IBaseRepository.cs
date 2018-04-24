@@ -8,7 +8,7 @@ namespace CQRSTemplate.Database.Repository.Interface
 {
     public interface IBaseRepository<TEntity, in TKey>
     {
-        List<TEntity> FindAll { get; }
+        List<TEntity> FindAll();
 
         Task<List<TEntity>> FindAllAsync();
 
