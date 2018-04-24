@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.GraphQL.Types
+namespace CQRSTemplate.Features.GraphQL.Types
 {
     public class UserType : ObjectGraphType<User>
     {

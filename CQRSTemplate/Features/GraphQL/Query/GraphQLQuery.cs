@@ -1,5 +1,5 @@
 ﻿using CQRSTemplate.Database.Repository.Interface;
-using CQRSTemplate.GraphQL.Types;
+using CQRSTemplate.Features.GraphQL.Types;
 using CQRSTemplate.Infraestructure.Exceptions;
 using GraphQL.Types;
 using System;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.GraphQL.Query
+namespace CQRSTemplate.Features.GraphQL.Query
 {
     public class GraphQLQuery : ObjectGraphType
     {
@@ -48,7 +48,7 @@ namespace CQRSTemplate.GraphQL.Query
                     {
                         return null;
                     }
-                });
+                }); 
             #endregion
         }
     }

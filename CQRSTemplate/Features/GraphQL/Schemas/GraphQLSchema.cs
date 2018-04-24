@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CQRSTemplate.GraphQL.Query;
+using CQRSTemplate.Features.GraphQL.Query;
 
-namespace CQRSTemplate.GraphQL.Schemas
+namespace CQRSTemplate.Features.GraphQL.Schemas
 {
     public class GraphQLSchema : Schema
     {

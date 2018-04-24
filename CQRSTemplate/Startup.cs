@@ -10,11 +10,11 @@ using CQRSTemplate.Database;
 using CQRSTemplate.Infraestructure.Middlewares;
 using GraphQL;
 using GraphQL.Types;
-using CQRSTemplate.GraphQL.Query;
+using CQRSTemplate.Features.GraphQL.Query;
 using CQRSTemplate.Database.Repository.Interface;
 using CQRSTemplate.Database.Repository;
-using CQRSTemplate.GraphQL.Schemas;
-using CQRSTemplate.GraphQL.Types;
+using CQRSTemplate.Features.GraphQL.Schemas;
+using CQRSTemplate.Features.GraphQL.Types;
 
 namespace CQRSTemplate
 {

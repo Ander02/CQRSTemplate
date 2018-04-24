@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.GraphQL.Controllers
+namespace CQRSTemplate.Features.GraphQL.Controllers
 {
     public class GraphQL
     {
@@ -42,7 +42,7 @@ namespace CQRSTemplate.GraphQL.Controllers
                 this.schema = schema;
                 this.documentExecuter = documentExecuter;
             }
-
+             
             protected override async Task<ExecutionResult> HandleCore(GraphQLQuery query)
             {
                 if (query == null) throw new ArgumentNullException(nameof(query));

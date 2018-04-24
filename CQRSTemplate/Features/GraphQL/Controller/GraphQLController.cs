@@ -1,4 +1,4 @@
-﻿using CQRSTemplate.GraphQL.Query;
+﻿using CQRSTemplate.Features.GraphQL.Query;
 using CQRSTemplate.Infraestructure.Exceptions;
 using GraphQL;
 using GraphQL.Types;
@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.GraphQL.Controllers
+namespace CQRSTemplate.Features.GraphQL.Controllers
 {
     [Route("[controller]")]
     public class GraphQLController : Controller
     {
         private readonly IMediator mediator;
-        
+          
         public GraphQLController(IMediator mediator)
         {
             this.mediator = mediator;
@@ -28,6 +28,5 @@ namespace CQRSTemplate.GraphQL.Controllers
 
             return result;
         }
-
     }
 }

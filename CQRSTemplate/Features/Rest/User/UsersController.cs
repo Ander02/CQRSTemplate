@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.Features.User
+namespace CQRSTemplate.Features.Rest.User
 {
     [Route("/[controller]")]
     public class UsersController : Controller

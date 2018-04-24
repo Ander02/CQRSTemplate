@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.Features.Message
+namespace CQRSTemplate.Features.Rest.Message
 {
     [Route("/[controller]")]
     public class MessagesController : Controller

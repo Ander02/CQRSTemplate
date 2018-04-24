@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CQRSTemplate.Database.Repository.Interface;
 
-namespace CQRSTemplate.Features.User
+namespace CQRSTemplate.Features.Rest.User
 {
     public class Register
     {

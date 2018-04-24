@@ -1,10 +1,10 @@
-﻿using CQRSTemplate.Features.User;
+﻿using CQRSTemplate.Features.Rest.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.Features.Message
+namespace CQRSTemplate.Features.Rest.Message
 {
     public class MessageViews
     {
