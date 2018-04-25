@@ -1,13 +1,10 @@
-﻿using CQRSTemplate.Database;
-using CQRSTemplate.Infraestructure.Exceptions;
+﻿using CQRSTemplate.Infraestructure.Exceptions;
 using FluentValidation;
 using GraphQL;
 using GraphQL.Types;
 using MediatR;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CQRSTemplate.GraphQL.Controller
@@ -42,7 +39,7 @@ namespace CQRSTemplate.GraphQL.Controller
                 this.schema = schema;
                 this.documentExecuter = documentExecuter;
             }
-             
+
             protected override async Task<ExecutionResult> HandleCore(GraphQLQuery query)
             {
                 if (query == null) throw new ArgumentNullException(nameof(query));

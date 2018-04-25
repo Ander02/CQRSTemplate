@@ -1,11 +1,6 @@
 ﻿using CQRSTemplate.Features.User;
 using GraphQL.Types;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CQRSTemplate.GraphQL.Types
 {
@@ -26,11 +21,15 @@ namespace CQRSTemplate.GraphQL.Types
                 description: "The user messages",
                 resolve: (context) =>
                 {
-                    var userId = context.Source.Id;
-                    return mediator.Send(new Features.Message.SearchMany.Query()
+                    try
                     {
-                        UserId = userId
-                    }).Result;
+                        var userId = context.Source.Id;
+                        return mediator.Send(new Features.Message.SearchMany.Query()
+                        {
+                            UserId = userId
+                        }).Result;
+                    }
+                    catch { return null; }
                 });
         }
     }

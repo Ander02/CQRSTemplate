@@ -8,25 +8,6 @@ namespace CQRSTemplate.Features.Message
 {
     public class MessageViews
     {
-        public class FullResult
-        {
-            public Guid Id { get; set; }
-            public string Title { get; set; }
-            public string Content { get; set; }
-
-            public virtual UserViews.SimpleResult User { get; set; }
-
-            public FullResult() { }
-
-            public FullResult(Domain.Message message)
-            {
-                this.Id = message.Id;
-                this.Title = message.Title;
-                this.Content = message.Content;
-                this.User = new UserViews.SimpleResult(message.User);
-            }
-        }
-
         public class SimpleResult
         {
             public Guid Id { get; set; }
@@ -40,6 +21,21 @@ namespace CQRSTemplate.Features.Message
                 this.Id = message.Id;
                 this.Title = message.Title;
                 this.Content = message.Content;
+            }
+        }
+
+        public class FullResult : SimpleResult
+        {
+            public virtual UserViews.SimpleResult User { get; set; }
+
+            public FullResult() { }
+
+            public FullResult(Domain.Message message)
+            {
+                this.Id = message.Id;
+                this.Title = message.Title;
+                this.Content = message.Content;
+                this.User = new UserViews.SimpleResult(message.User);
             }
         }
     }
