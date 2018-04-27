@@ -41,6 +41,15 @@ namespace CQRSTemplate.Features.Message
             return result;
         }
 
+        [HttpPut("{id}")]
+        public async Task<MessageViews.SimpleResult> Delete([FromRoute] Guid id, [FromBody] Update.Command command)
+        {
+            command.Id = id;
+            var result = await this.mediator.Send(command);
+
+            return result;
+        }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete([FromRoute] Delete.Command command)
         {

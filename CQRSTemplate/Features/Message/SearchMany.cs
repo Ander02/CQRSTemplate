@@ -17,7 +17,7 @@ namespace CQRSTemplate.Features.Message
         {
             public string Title { get; set; } = "";
             public string Content { get; set; } = "";
-            public Guid UserId { get; set; }
+            public Guid? UserId { get; set; }
             public int Limit { get; set; } = 100;
             public int Page { get; set; } = 0;
         }
@@ -48,7 +48,7 @@ namespace CQRSTemplate.Features.Message
 
                 if (query.Title != null && query.Content.NotEquals("")) q = messageRepository.QueryFindByContent(q, query.Content);
 
-                if (query.UserId != null) q = messageRepository.QueryFindByUserId(q, query.UserId);
+                if (query.UserId.HasValue) q = messageRepository.QueryFindByUserId(q, query.UserId.Value);
 
                 q = q.OrderBy(m => m.Title);
                 q = q.Skip(query.Limit * query.Page).Take(query.Limit);
