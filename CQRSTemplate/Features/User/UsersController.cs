@@ -20,7 +20,7 @@ namespace CQRSTemplate.Features.User
         [HttpPost]
         public async Task<ActionResult> Register([FromBody] Register.Command value)
         {
-            var result = await mediator.Send(value);
+            var result = await this.mediator.Send(value);
 
             return Created(this.Request.Path.Value + "/" + result.Id, result);
         }
@@ -28,7 +28,7 @@ namespace CQRSTemplate.Features.User
         [HttpGet]
         public async Task<List<UserViews.FullResult>> SearchMany([FromQuery] SearchMany.Query query)
         {
-            var result = await mediator.Send(query);
+            var result = await this.mediator.Send(query);
 
             return result;
         }
@@ -36,7 +36,16 @@ namespace CQRSTemplate.Features.User
         [HttpGet("{id}")]
         public async Task<UserViews.FullResult> SearchOne([FromRoute] SearchOne.Query query)
         {
-            var result = await mediator.Send(query);
+            var result = await this.mediator.Send(query);
+
+            return result;
+        }
+
+        [HttpPut("{id}")]
+        public async Task<UserViews.SimpleResult> Delete([FromRoute] Guid id, [FromBody] Update.Command command)
+        {
+            command.Id = id;
+            var result = await this.mediator.Send(command);
 
             return result;
         }
