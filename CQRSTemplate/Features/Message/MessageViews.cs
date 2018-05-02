@@ -26,7 +26,7 @@ namespace CQRSTemplate.Features.Message
 
         public class FullResult : SimpleResult
         {
-            public virtual UserViews.SimpleResult User { get; set; }
+            public UserViews.SimpleResult User { get; set; }
 
             public FullResult() { }
 

@@ -5,7 +5,7 @@ namespace CQRSTemplate.Infraestructure.Database
 {
     public class Db : DbContext
     {
-        #region Tables
+        #region DbSets
         public DbSet<User> Users { get; set; }
         public DbSet<Message> Messages { get; set; }
         #endregion

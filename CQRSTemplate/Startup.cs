@@ -28,7 +28,7 @@ namespace CQRSTemplate
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options =>
+            services.AddMvc((options) =>
             {
                 options.Filters.Add(typeof(ValidationActionFilter));
             })
@@ -41,7 +41,7 @@ namespace CQRSTemplate
             });
 
             //Dababase Injection
-            services.AddDbContext<Db>(options =>
+            services.AddDbContext<Db>((options) =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
@@ -70,7 +70,7 @@ namespace CQRSTemplate
             }
 
             //Cors Config
-            app.UseCors(builder => builder.AllowAnyOrigin().WithMethods(new string[] { "GET", "POST", "PUT", "PATCH" , "DELETE" ,"OPTIONS" }).AllowAnyHeader());
+            app.UseCors(builder => builder.AllowAnyOrigin().WithMethods(new string[] { "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS" }).AllowAnyHeader());
 
             app.UseMiddleware<HttpExceptionHandlerMiddleware>();
             app.UseMvc();

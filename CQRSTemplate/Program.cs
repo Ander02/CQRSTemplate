@@ -13,7 +13,6 @@ namespace CQRSTemplate
     {
         public static void Main(string[] args)
         {
-
             bool runSeed = false;
 
             if (args.Contains("seed"))
