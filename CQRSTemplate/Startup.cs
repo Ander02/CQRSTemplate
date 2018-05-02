@@ -6,15 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using MediatR;
 using FluentValidation.AspNetCore;
 using CQRSTemplate.Infraestructure.Filters;
-using CQRSTemplate.Database;
 using CQRSTemplate.Infraestructure.Middlewares;
 using GraphQL;
 using GraphQL.Types;
-using CQRSTemplate.Database.Repository.Interface;
-using CQRSTemplate.Database.Repository;
 using CQRSTemplate.GraphQL.Types;
 using CQRSTemplate.GraphQL.Schemas;
 using CQRSTemplate.GraphQL.Query;
+using CQRSTemplate.Infraestructure.Database;
 
 namespace CQRSTemplate
 {
@@ -47,22 +45,19 @@ namespace CQRSTemplate
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-            //Repository Injection
-            services.AddTransient<IMessageRepository, MessageRepository>();
-            services.AddTransient<IUserRepository, UserRepository>();
 
             services.AddCors();
             services.AddMediatR(typeof(Startup));
 
             //GraphQL Dependency Injection
-            services.AddScoped<GraphQLQuery>();
+            services.AddScoped<GraphQLRootQuery>();
             services.AddTransient<UserType>();
             services.AddTransient<MessageType>();
             services.AddScoped<IDocumentExecuter, DocumentExecuter>();
             var servicesProvider = services.BuildServiceProvider();
             services.AddScoped<ISchema>(schema => new GraphQLSchema(type => (GraphType)servicesProvider.GetService(type))
             {
-                Query = servicesProvider.GetService<GraphQLQuery>()
+                Query = servicesProvider.GetService<GraphQLRootQuery>()
             });
         }
 
@@ -74,7 +69,8 @@ namespace CQRSTemplate
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(builder => builder.AllowAnyOrigin().WithMethods(new string[] { "GET", "POST", "OPTIONS" }).AllowAnyHeader());
+            //Cors Config
+            app.UseCors(builder => builder.AllowAnyOrigin().WithMethods(new string[] { "GET", "POST", "PUT", "PATCH" , "DELETE" ,"OPTIONS" }).AllowAnyHeader());
 
             app.UseMiddleware<HttpExceptionHandlerMiddleware>();
             app.UseMvc();

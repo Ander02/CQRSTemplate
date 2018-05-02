@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CQRSTemplate.Database.Repository.Interface;
+using CQRSTemplate.Infraestructure.Database;
 
 namespace CQRSTemplate.Features.Message
 {
@@ -33,22 +33,22 @@ namespace CQRSTemplate.Features.Message
 
         public class Handler : AsyncRequestHandler<Query, List<MessageViews.FullResult>>
         {
-            private readonly IMessageRepository messageRepository;
+            private readonly Db db;
 
-            public Handler(IMessageRepository messageRepository)
+            public Handler(Db db)
             {
-                this.messageRepository = messageRepository;
+                this.db = db;
             }
 
             protected override async Task<List<MessageViews.FullResult>> HandleCore(Query query)
             {
-                var q = messageRepository.GetEntityQuery();
+                var q = db.Messages.Include(m => m.User).AsQueryable();
 
-                if (query.Title != null && query.Title.NotEquals("")) q = messageRepository.QueryFindByTitle(q, query.Title);
+                if (query.Title != null && query.Title.NotEquals("")) q = q.Where(m => m.Title.Contains(query.Title));
 
-                if (query.Title != null && query.Content.NotEquals("")) q = messageRepository.QueryFindByContent(q, query.Content);
+                if (query.Content != null && query.Content.NotEquals("")) q = q.Where(m => m.Content.Contains(query.Content));
 
-                if (query.UserId.HasValue) q = messageRepository.QueryFindByUserId(q, query.UserId.Value);
+                if (query.UserId.HasValue) q = q.Where(m => m.UserId.Equals(query.UserId));
 
                 q = q.OrderBy(m => m.Title);
                 q = q.Skip(query.Limit * query.Page).Take(query.Limit);

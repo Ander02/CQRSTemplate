@@ -30,11 +30,8 @@ namespace CQRSTemplate.Features.Message
 
             public FullResult() { }
 
-            public FullResult(Domain.Message message)
+            public FullResult(Domain.Message message) : base(message)
             {
-                this.Id = message.Id;
-                this.Title = message.Title;
-                this.Content = message.Content;
                 this.User = new UserViews.SimpleResult(message.User);
             }
         }

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CQRSTemplate.Infraestructure.Exceptions;
-using CQRSTemplate.Database.Repository.Interface;
+using CQRSTemplate.Infraestructure.Database;
 
 namespace CQRSTemplate.Features.User
 {
@@ -29,16 +29,16 @@ namespace CQRSTemplate.Features.User
 
         public class Handler : AsyncRequestHandler<Query, UserViews.FullResult>
         {
-            private readonly IUserRepository userRepository;
+            private readonly Db db;
 
-            public Handler(IUserRepository userRepository)
+            public Handler(Db db)
             {
-                this.userRepository = userRepository;
+                this.db = db;
             }
 
             protected override async Task<UserViews.FullResult> HandleCore(Query query)
             {
-                var user = await userRepository.FindByIdAsync(query.Id);
+                var user = await db.Users.Include(u => u.Messages).Where(u => u.Id.Equals(query.Id)).FirstOrDefaultAsync();
 
                 if (user == null) throw new NotFoundException("Não foi possível encontrar o usuário com o Id : " + query.Id);
 

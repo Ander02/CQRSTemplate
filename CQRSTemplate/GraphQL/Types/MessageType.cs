@@ -1,5 +1,4 @@
-﻿using CQRSTemplate.Database.Repository.Interface;
-using CQRSTemplate.Features.Message;
+﻿using CQRSTemplate.Features.Message;
 using GraphQL.Types;
 using MediatR;
 

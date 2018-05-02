@@ -1,12 +1,11 @@
-﻿using CQRSTemplate.Database;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace CQRSTemplate.Domain
 {
-    public class Message : IEntity<Guid>
+    public class Message
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
@@ -14,9 +13,5 @@ namespace CQRSTemplate.Domain
 
         public Guid UserId { get; set; }
         public virtual User User { get; set; }
-
-        internal class SearchMany
-        {
-        }
     }
 }

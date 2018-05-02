@@ -1,4 +1,4 @@
-﻿using CQRSTemplate.Database.Repository.Interface;
+﻿using CQRSTemplate.Infraestructure.Database;
 using CQRSTemplate.Infraestructure.Exceptions;
 using FluentValidation;
 using MediatR;
@@ -29,23 +29,23 @@ namespace CQRSTemplate.Features.Message
 
         public class Handler : AsyncRequestHandler<Command, MessageViews.SimpleResult>
         {
-            private readonly IMessageRepository messageRepository;
+            private readonly Db db;
 
-            public Handler(IMessageRepository messageRepository)
+            public Handler(Db db)
             {
-                this.messageRepository = messageRepository;
+                this.db = db;
             }
 
             protected override async Task<MessageViews.SimpleResult> HandleCore(Command command)
             {
-                var message = await messageRepository.FindByIdAsync(command.Id);
+                var message = await db.Messages.FindAsync(command.Id);
 
                 if (message == null) throw new NotFoundException("Não foi possível encontrar mensagem com o Id : " + command.Id);
 
                 message.Title = command.Title ?? message.Title;
                 message.Content = command.Content ?? message.Content;
 
-                await messageRepository.SaveChangesAsync();
+                await db.SaveChangesAsync();
 
                 return new MessageViews.SimpleResult(message);
             }

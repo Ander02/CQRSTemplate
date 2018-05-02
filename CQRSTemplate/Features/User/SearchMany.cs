@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CQRSTemplate.Database.Repository.Interface;
+using CQRSTemplate.Infraestructure.Database;
 
 namespace CQRSTemplate.Features.User
 {
@@ -32,20 +32,20 @@ namespace CQRSTemplate.Features.User
 
         public class Handler : AsyncRequestHandler<Query, List<UserViews.FullResult>>
         {
-            private readonly IUserRepository userRepository;
+            private readonly Db db;
 
-            public Handler(IUserRepository userRepository)
+            public Handler(Db db)
             {
-                this.userRepository = userRepository;
+                this.db = db;
             }
-
+            
             protected override async Task<List<UserViews.FullResult>> HandleCore(Query query)
             {
-                var q = userRepository.GetEntityQuery();
+                var q = db.Users.Include(u => u.Messages).AsQueryable();
 
-                if (query.Name != null && query.Name.NotEquals("")) q = userRepository.QueryFindByName(q, query.Name);
+                if (query.Name != null && query.Name.NotEquals("")) q = q.Where(u => u.Name.Contains(query.Name));
 
-                if (query.Age > 0) q = userRepository.QueryFindByAge(q, query.Age);
+                if (query.Age > 0) q = q = q.Where(u => u.Age == query.Age);
 
                 q = q.OrderBy(u => u.Name);
                 q = q.Skip(query.Limit * query.Page).Take(query.Limit);

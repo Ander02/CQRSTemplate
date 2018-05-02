@@ -6,11 +6,11 @@ using System;
 
 namespace CQRSTemplate.GraphQL.Query
 {
-    public class GraphQLQuery : ObjectGraphType
+    public class GraphQLRootQuery : ObjectGraphType
     {
-        public GraphQLQuery() { }
+        public GraphQLRootQuery() { }
 
-        public GraphQLQuery(IMediator mediator)
+        public GraphQLRootQuery(IMediator mediator)
         {
             Name = "Query";
 

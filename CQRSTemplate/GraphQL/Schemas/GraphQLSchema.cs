@@ -8,7 +8,7 @@ namespace CQRSTemplate.GraphQL.Schemas
     {
         public GraphQLSchema(Func<Type, GraphType> resolve) : base(resolve)
         {
-            Query = (GraphQLQuery)resolve(typeof(GraphQLQuery));
+            Query = (GraphQLRootQuery)resolve(typeof(GraphQLRootQuery));
         }
     }
 }

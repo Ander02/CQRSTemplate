@@ -1,4 +1,4 @@
-﻿using CQRSTemplate.Database.Repository.Interface;
+﻿using CQRSTemplate.Infraestructure.Database;
 using CQRSTemplate.Infraestructure.Exceptions;
 using FluentValidation;
 using MediatR;
@@ -30,16 +30,16 @@ namespace CQRSTemplate.Features.User
 
         public class Handler : AsyncRequestHandler<Command, UserViews.SimpleResult>
         {
-            private readonly IUserRepository userRepository;
+            private readonly Db db;
 
-            public Handler(IUserRepository userRepository)
+            public Handler(Db db)
             {
-                this.userRepository = userRepository;
+                this.db = db;
             }
 
             protected override async Task<UserViews.SimpleResult> HandleCore(Command command)
             {
-                var user = await userRepository.FindByIdAsync(command.Id);
+                var user = await db.Users.FindAsync(command.Id);
 
                 if (user == null) throw new NotFoundException("Não foi possível encontrar o usuário com o Id : " + command.Id);
 
@@ -47,7 +47,7 @@ namespace CQRSTemplate.Features.User
                 user.Name = command.Name ?? user.Name;
                 user.Email = command.Email ?? user.Email;
 
-                await userRepository.SaveChangesAsync();
+                await db.SaveChangesAsync();
 
                 return new UserViews.SimpleResult(user);
             }

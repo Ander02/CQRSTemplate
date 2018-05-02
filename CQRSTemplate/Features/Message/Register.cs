@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CQRSTemplate.Database.Repository.Interface;
+using CQRSTemplate.Infraestructure.Database;
 
 namespace CQRSTemplate.Features.Message
 {
@@ -31,13 +31,11 @@ namespace CQRSTemplate.Features.Message
 
         public class Handler : AsyncRequestHandler<Command, MessageViews.FullResult>
         {
-            private readonly IMessageRepository messageRepository;
-            private readonly IUserRepository userRepository;
+            private readonly Db db;
 
-            public Handler(IMessageRepository messageRepository, IUserRepository userRepository)
+            public Handler(Db db)
             {
-                this.messageRepository = messageRepository;
-                this.userRepository = userRepository;
+                this.db = db;
             }
 
             protected override async Task<MessageViews.FullResult> HandleCore(Command command)
@@ -46,12 +44,12 @@ namespace CQRSTemplate.Features.Message
                 {
                     Title = command.Title,
                     Content = command.Content,
-                    User = await userRepository.FindByIdAsync(command.UserId)
+                    User = await db.Users.FindAsync(command.UserId)
                 };
 
-                await messageRepository.AddAsync(message);
+                await db.Messages.AddAsync(message);
 
-                await messageRepository.SaveChangesAsync();
+                await db.SaveChangesAsync();
 
                 return new MessageViews.FullResult(message);
             }

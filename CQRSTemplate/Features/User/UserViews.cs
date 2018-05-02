@@ -32,13 +32,9 @@ namespace CQRSTemplate.Features.User
 
             public FullResult() { }
 
-            public FullResult(Domain.User user)
+            public FullResult(Domain.User user) : base(user)
             {
-                this.Id = user.Id;
-                this.Age = user.Age;
-                this.Email = user.Email;
-                this.Name = user.Name;
-                this.Messages = user.Messages.Select(u => new MessageViews.SimpleResult(u)).ToList();
+                this.Messages = user.Messages.Select(m => new MessageViews.SimpleResult(m)).ToList();
             }
         }
     }

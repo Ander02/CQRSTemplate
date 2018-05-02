@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180502161725_init.cs" />
+    <Compile Remove="Migrations\20180502161725_init.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Features\User\SearchMany.cs~RF582f45b6.TMP" />
   </ItemGroup>
 

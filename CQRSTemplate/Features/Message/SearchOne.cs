@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CQRSTemplate.Infraestructure.Exceptions;
-using CQRSTemplate.Database.Repository.Interface;
+using CQRSTemplate.Infraestructure.Database;
 
 namespace CQRSTemplate.Features.Message
 {
@@ -29,16 +29,16 @@ namespace CQRSTemplate.Features.Message
 
         public class Handler : AsyncRequestHandler<Query, MessageViews.FullResult>
         {
-            private readonly IMessageRepository messageRepository;
+            private readonly Db db;
 
-            public Handler(IMessageRepository messageRepository)
+            public Handler(Db db)
             {
-                this.messageRepository = messageRepository;
+                this.db = db;
             }
 
             protected override async Task<MessageViews.FullResult> HandleCore(Query query)
             {
-                var message = await messageRepository.FindByIdAsync(query.Id);
+                var message = await db.Messages.Include(m => m.User).Where(m => m.Id.Equals(query.Id)).FirstOrDefaultAsync();
 
                 if (message == null) throw new NotFoundException("Não foi possível encontrar a mensagem com o Id : " + query.Id);
 
