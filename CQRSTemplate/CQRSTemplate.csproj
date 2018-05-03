@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20180502161725_init.cs" />
-    <Compile Remove="Migrations\20180502161725_init.Designer.cs" />
+    <Compile Remove="Migrations\20180502190312_Init.cs" />
+    <Compile Remove="Migrations\20180502190312_Init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="GraphQL\InputType\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

@@ -8,7 +8,8 @@ namespace CQRSTemplate.GraphQL.Schemas
     {
         public GraphQLSchema(Func<Type, GraphType> resolve) : base(resolve)
         {
-            Query = (GraphQLRootQuery)resolve(typeof(GraphQLRootQuery));
+            Query = (RootQuery)resolve(typeof(RootQuery));
+            Mutation = (RootMutation)resolve(typeof(RootMutation));
         }
     }
 }

@@ -19,12 +19,20 @@ namespace CQRSTemplate.Features.User
 
         public class CommandValidator : AbstractValidator<Command>
         {
-            public CommandValidator()
+            public CommandValidator(Db db)
             {
                 //Validations
                 RuleFor(q => q.Age).NotNull().GreaterThanOrEqualTo(0);
                 RuleFor(q => q.Name).NotNull().NotEmpty();
                 RuleFor(q => q.Email).NotNull().NotEmpty().EmailAddress();
+
+                  /*.Custom((value, context) =>
+                  {
+                      var user = db.Users.Where(u => u.Email.Equals(value)).FirstOrDefault();
+
+                      if (user != null) context.AddFailure("Email repetido");
+
+                  });*/
             }
         }
 
@@ -39,6 +47,7 @@ namespace CQRSTemplate.Features.User
 
             protected override async Task<UserViews.SimpleResult> HandleCore(Command command)
             {
+
                 var user = new Domain.User()
                 {
                     Age = command.Age,

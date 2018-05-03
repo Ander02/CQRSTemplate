@@ -1,6 +1,10 @@
-﻿using System;
+﻿using CQRSTemplate.Infraestructure.Exceptions;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using System;
 using System.Globalization;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CQRSTemplate.Util
 {
@@ -25,5 +29,17 @@ namespace CQRSTemplate.Util
         }
 
         public static bool NotEquals(this object obj1, object obj2) => !obj1.Equals(obj2);
+
+        public static async Task MakeErrorResponse(this HttpContext context, int statusCode, dynamic errorMessage)
+        {
+            context.Response.StatusCode = statusCode;
+            context.Response.ContentType = "application/json";
+
+            byte[] buffer = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new ExceptionResult()
+            {
+                Error = errorMessage
+            }));
+            await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+        }
     }
 }

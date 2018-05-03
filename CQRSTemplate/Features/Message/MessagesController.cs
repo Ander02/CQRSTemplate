@@ -55,7 +55,7 @@ namespace CQRSTemplate.Features.Message
         {
             await mediator.Send(command);
 
-            return this.StatusCode(204);
+            return NoContent();
         }
     }
 }

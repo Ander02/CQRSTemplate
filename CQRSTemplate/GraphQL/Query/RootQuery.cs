@@ -1,21 +1,22 @@
 ﻿using CQRSTemplate.Features;
 using CQRSTemplate.GraphQL.Types;
+using GraphQL;
 using GraphQL.Types;
 using MediatR;
 using System;
 
 namespace CQRSTemplate.GraphQL.Query
 {
-    public class GraphQLRootQuery : ObjectGraphType
+    public class RootQuery : ObjectGraphType
     {
-        public GraphQLRootQuery() { }
+        public RootQuery() { }
 
-        public GraphQLRootQuery(IMediator mediator)
+        public RootQuery(IMediator mediator)
         {
-            Name = "Query";
+            this.Name = "Query";
 
             #region Users
-            Field<ListGraphType<UserType>>(
+            FieldAsync<ListGraphType<UserType>>(
 
                 name: "Users",
                 description: "The system's users",
@@ -42,7 +43,7 @@ namespace CQRSTemplate.GraphQL.Query
                         Description = "data page"
                     },
                 },
-                resolve: (context) =>
+                resolve: async (context) =>
                 {
                     try
                     {
@@ -57,12 +58,16 @@ namespace CQRSTemplate.GraphQL.Query
                         query.Limit = limit ?? query.Limit;
                         query.Page = page ?? query.Page;
 
-                        return mediator.Send(query).Result;
+                        return await mediator.Send(query);
                     }
-                    catch { return null; }
+                    catch (Exception ex)
+                    {
+                        context.Errors.Add(new ExecutionError(ex.Message, ex));
+                        return null;
+                    }
                 });
 
-            Field<UserType>(
+            FieldAsync<UserType>(
                 name: "User",
                 description: "A system user",
                 arguments: new QueryArguments(
@@ -72,22 +77,22 @@ namespace CQRSTemplate.GraphQL.Query
                         Description = "id of the human"
                     }
                 ),
-                resolve: (context) =>
+                resolve: async (context) =>
                 {
                     try
                     {
                         var userId = context.GetArgument<Guid>("id");
-                        return mediator.Send(new Features.User.SearchOne.Query()
+                        return await mediator.Send(new Features.User.SearchOne.Query()
                         {
                             Id = userId
-                        }).Result;
+                        });
                     }
                     catch { return null; }
                 });
             #endregion
 
             #region Message
-            Field<ListGraphType<MessageType>>(
+            FieldAsync<ListGraphType<MessageType>>(
 
                 name: "Messages",
                 description: "The system's messages",
@@ -119,7 +124,7 @@ namespace CQRSTemplate.GraphQL.Query
                         Description = "data page"
                     }
                 },
-                resolve: (context) =>
+                resolve: async (context) =>
                 {
                     try
                     {
@@ -136,7 +141,7 @@ namespace CQRSTemplate.GraphQL.Query
                         query.Limit = limit ?? query.Limit;
                         query.Page = page ?? query.Page;
 
-                        return mediator.Send(query).Result;
+                        return await mediator.Send(query);
                     }
                     catch { return null; }
                 });

@@ -14,7 +14,7 @@ namespace CQRSTemplate.Infraestructure.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().ToTable(nameof(User));
+            modelBuilder.Entity<User>().ToTable(nameof(User)).HasIndex(u => u.Email).IsUnique();
             modelBuilder.Entity<Message>().ToTable(nameof(Message)).HasOne(m => m.User).WithMany(u => u.Messages);
         }
     }

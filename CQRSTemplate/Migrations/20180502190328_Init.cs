@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace CQRSTemplate.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,13 @@ namespace CQRSTemplate.Migrations
                 name: "IX_Message_UserId",
                 table: "Message",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_Email",
+                table: "User",
+                column: "Email",
+                unique: true,
+                filter: "[Email] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

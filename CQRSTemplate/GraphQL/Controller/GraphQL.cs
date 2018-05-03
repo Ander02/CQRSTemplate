@@ -3,6 +3,7 @@ using FluentValidation;
 using GraphQL;
 using GraphQL.Types;
 using MediatR;
+using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace CQRSTemplate.GraphQL.Controller
 {
     public class GraphQL
     {
-        public class GraphQLQuery : IRequest<ExecutionResult>
+        public class GQuery : IRequest<ExecutionResult>
         {
             public string OperationName { get; set; }
             public string NamedQuery { get; set; }
@@ -21,7 +22,7 @@ namespace CQRSTemplate.GraphQL.Controller
             public override string ToString() => Newtonsoft.Json.JsonConvert.SerializeObject(this);
         }
 
-        public class CommandValidator : AbstractValidator<GraphQLQuery>
+        public class CommandValidator : AbstractValidator<GQuery>
         {
             public CommandValidator()
             {
@@ -29,7 +30,7 @@ namespace CQRSTemplate.GraphQL.Controller
             }
         }
 
-        public class Handler : AsyncRequestHandler<GraphQLQuery, ExecutionResult>
+        public class Handler : AsyncRequestHandler<GQuery, ExecutionResult>
         {
             private readonly ISchema schema;
             private readonly IDocumentExecuter documentExecuter;
@@ -40,7 +41,7 @@ namespace CQRSTemplate.GraphQL.Controller
                 this.documentExecuter = documentExecuter;
             }
 
-            protected override async Task<ExecutionResult> HandleCore(GraphQLQuery query)
+            protected override async Task<ExecutionResult> HandleCore(GQuery query)
             {
                 if (query == null) throw new ArgumentNullException(nameof(query));
 
@@ -50,7 +51,7 @@ namespace CQRSTemplate.GraphQL.Controller
                     Query = query.Query
                 }).ConfigureAwait(false);
 
-                if (result.Errors?.Count > 0) throw new BadRequestException(result.Errors.FirstOrDefault().Message);
+                if (result.Errors?.Count > 0) throw new BadRequestException(JsonConvert.SerializeObject(result));
 
                 return result;
             }

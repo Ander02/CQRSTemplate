@@ -13,6 +13,7 @@ using CQRSTemplate.GraphQL.Types;
 using CQRSTemplate.GraphQL.Schemas;
 using CQRSTemplate.GraphQL.Query;
 using CQRSTemplate.Infraestructure.Database;
+using CQRSTemplate.GraphQL.InputType;
 
 namespace CQRSTemplate
 {
@@ -50,15 +51,22 @@ namespace CQRSTemplate
             services.AddMediatR(typeof(Startup));
 
             //GraphQL Dependency Injection
-            services.AddScoped<GraphQLRootQuery>();
             services.AddTransient<UserType>();
             services.AddTransient<MessageType>();
+
+            services.AddTransient<UserInputType>();
+
+            services.AddScoped<RootQuery>();
+            services.AddScoped<RootMutation>();
+
             services.AddScoped<IDocumentExecuter, DocumentExecuter>();
             var servicesProvider = services.BuildServiceProvider();
             services.AddScoped<ISchema>(schema => new GraphQLSchema(type => (GraphType)servicesProvider.GetService(type))
             {
-                Query = servicesProvider.GetService<GraphQLRootQuery>()
+                Query = servicesProvider.GetService<RootQuery>(),
+                Mutation = servicesProvider.GetService<RootMutation>()
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

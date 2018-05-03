@@ -11,8 +11,8 @@ using System;
 namespace CQRSTemplate.Migrations
 {
     [DbContext(typeof(Db))]
-    [Migration("20180502161819_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20180502190328_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,6 +51,10 @@ namespace CQRSTemplate.Migrations
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
 
                     b.ToTable("User");
                 });

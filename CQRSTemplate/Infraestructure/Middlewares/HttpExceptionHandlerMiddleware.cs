@@ -1,8 +1,11 @@
 ﻿using CQRSTemplate.Infraestructure.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using System;
+using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
+using CQRSTemplate.Util;
 
 namespace CQRSTemplate.Infraestructure.Middlewares
 {
@@ -22,14 +25,28 @@ namespace CQRSTemplate.Infraestructure.Middlewares
             }
             catch (BaseHttpException e)
             {
-                context.Response.StatusCode = e.StatusCode;
-                context.Response.ContentType = "application/json";
+                await context.MakeErrorResponse(e.StatusCode, (string)e.Body);
+            }
+            catch (Exception ex) when (ex.InnerException is SqlException sqlEx)
+            {
+                await this.HandleSqlException(sqlEx, context);
+            }
+            catch(Exception ex)
+            {
+                
+            }
+        }
 
-                byte[] buffer = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new ExceptionResult()
-                {
-                    Error = e.Body
-                }));
-                await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+        private async Task HandleSqlException(SqlException sqlException, HttpContext context)
+        {
+            switch (sqlException.Number)
+            {
+                case 2601:
+                    await context.MakeErrorResponse(409, "Deu conflito");
+                    break;
+                default:
+                    await context.MakeErrorResponse(500, "Vish véi, deu ruim");
+                    break;
             }
         }
     }

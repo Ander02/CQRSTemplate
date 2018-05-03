@@ -12,17 +12,17 @@ namespace CQRSTemplate.GraphQL.Types
             Field(m => m.Title).Description("The message title");
             Field(m => m.Content).Description("The message content");
 
-            Field<UserType>(
+            FieldAsync<UserType>(
                 name: "User",
                 description: "The user with send the message",
-                resolve: (context) =>
+                resolve: async (context) =>
                 {
                     try
                     {
-                        return mediator.Send(new Features.User.SearchOne.Query()
+                        return await mediator.Send(new Features.User.SearchOne.Query()
                         {
                             Id = context.Source.User.Id
-                        }).Result;
+                        });
                     }
                     catch { return null; }
                 });

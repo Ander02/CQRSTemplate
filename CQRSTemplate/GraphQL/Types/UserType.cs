@@ -16,18 +16,18 @@ namespace CQRSTemplate.GraphQL.Types
             Field(u => u.Age).Description("The user age");
             Field(u => u.Email).Description("The user email");
 
-            Field<ListGraphType<MessageType>>(
+            FieldAsync<ListGraphType<MessageType>>(
                 name: "Messages",
                 description: "The user messages",
-                resolve: (context) =>
+                resolve: async (context) =>
                 {
                     try
                     {
                         var userId = context.Source.Id;
-                        return mediator.Send(new Features.Message.SearchMany.Query()
+                        return await mediator.Send(new Features.Message.SearchMany.Query()
                         {
                             UserId = userId
-                        }).Result;
+                        });
                     }
                     catch { return null; }
                 });
