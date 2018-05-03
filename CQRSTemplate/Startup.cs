@@ -11,7 +11,7 @@ using GraphQL;
 using GraphQL.Types;
 using CQRSTemplate.GraphQL.Types;
 using CQRSTemplate.GraphQL.Schemas;
-using CQRSTemplate.GraphQL.Query;
+using CQRSTemplate.GraphQL.Root;
 using CQRSTemplate.Infraestructure.Database;
 using CQRSTemplate.GraphQL.InputType;
 

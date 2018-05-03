@@ -47,7 +47,6 @@ namespace CQRSTemplate.Features.User
 
             protected override async Task<UserViews.SimpleResult> HandleCore(Command command)
             {
-
                 var user = new Domain.User()
                 {
                     Age = command.Age,

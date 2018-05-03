@@ -5,7 +5,7 @@ using GraphQL.Types;
 using MediatR;
 using System;
 
-namespace CQRSTemplate.GraphQL.Query
+namespace CQRSTemplate.GraphQL.Root
 {
     public class RootQuery : ObjectGraphType
     {

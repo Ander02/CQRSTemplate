@@ -1,4 +1,4 @@
-﻿using CQRSTemplate.GraphQL.Query;
+﻿using CQRSTemplate.GraphQL.Root;
 using GraphQL.Types;
 using System;
 
