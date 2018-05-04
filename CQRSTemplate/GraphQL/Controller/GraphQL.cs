@@ -51,7 +51,7 @@ namespace CQRSTemplate.GraphQL.Controller
                     Query = query.Query
                 }).ConfigureAwait(false);
 
-                if (result.Errors?.Count > 0) throw new BadRequestException(JsonConvert.SerializeObject(result));
+                //if (result.Errors?.Count > 0) throw new BadRequestException(JsonConvert.SerializeObject(result));
 
                 return result;
             }

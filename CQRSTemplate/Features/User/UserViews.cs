@@ -34,7 +34,14 @@ namespace CQRSTemplate.Features.User
 
             public FullResult(Domain.User user) : base(user)
             {
-                this.Messages = user.Messages.Select(m => new MessageViews.SimpleResult(m)).ToList();
+                if (user.Messages != null)
+                {
+                    this.Messages = user.Messages.Select(m => new MessageViews.SimpleResult(m)).ToList();
+                }
+                else
+                {
+                    this.Messages = new List<MessageViews.SimpleResult>();
+                }
             }
         }
     }

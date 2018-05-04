@@ -36,24 +36,20 @@ namespace CQRSTemplate
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                var logger = services.GetRequiredService<ILogger<Startup>>();
-                logger.LogInformation("Seed log services acquired");
                 var dbContext = services.GetService<Db>();
-                logger.LogInformation("DataBase context acquired");
                 try
                 {
                     //Inicializa o Banco de Dados
-                    await DbInitializer.Initialize(dbContext, logger);
+                    await DbInitializer.Initialize(dbContext);
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.GetBaseException().Message);
-                    logger.LogError(ex, "An error occurred while seeding the database!!");
                 }
                 finally
                 {
                     Console.WriteLine("Seed ended");
-                    Console.ReadKey();
+                    Console.Read();
                 }
             }
         }

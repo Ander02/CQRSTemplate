@@ -1,5 +1,4 @@
-﻿using CQRSTemplate.Domain;
-using CQRSTemplate.Features.User;
+﻿using CQRSTemplate.Features.User;
 using CQRSTemplate.GraphQL.InputType;
 using CQRSTemplate.GraphQL.Types;
 using GraphQL;
@@ -25,33 +24,27 @@ namespace CQRSTemplate.GraphQL.Root
                 description: "This mutation add a user",
                 arguments: new QueryArguments
                 {
-                    new QueryArgument<UserInputType>()
+                    new QueryArgument<NonNullGraphType<UserInputType>>()
                     {
                         Name = "Input",
                         Description = "A system user"
                     }
                 },
                 resolve: async (context) =>
-               {
-                   try
-                   {
-                       var input = context.GetArgument<UserViews.SimpleResult>("Input");
+                {
+                    var input = context.GetArgument<UserViews.FullResult>("Input");
 
-                       Register.Command command = new Register.Command()
-                       {
-                           Age = input.Age,
-                           Email = input.Email,
-                           Name = input.Name
-                       };
+                    Register.Command command = new Register.Command()
+                    {
+                        Age = input.Age,
+                        Email = input.Email,
+                        Name = input.Name
+                    };
 
-                       return await mediator.Send(command);
-                   }
-                   catch (Exception ex)
-                   {
-                       context.Errors.Add(new ExecutionError(ex.Message, ex));
-                       return null;
-                   }
-               });
+                    var result = await mediator.Send(command);
+
+                    return result;
+                });
             #endregion
         }
     }

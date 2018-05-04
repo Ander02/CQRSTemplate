@@ -21,15 +21,11 @@ namespace CQRSTemplate.GraphQL.Types
                 description: "The user messages",
                 resolve: async (context) =>
                 {
-                    try
+                    var userId = context.Source.Id;
+                    return await mediator.Send(new Features.Message.SearchMany.Query()
                     {
-                        var userId = context.Source.Id;
-                        return await mediator.Send(new Features.Message.SearchMany.Query()
-                        {
-                            UserId = userId
-                        });
-                    }
-                    catch { return null; }
+                        UserId = userId
+                    });
                 });
         }
     }

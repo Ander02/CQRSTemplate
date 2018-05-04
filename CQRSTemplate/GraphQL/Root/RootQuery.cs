@@ -45,26 +45,18 @@ namespace CQRSTemplate.GraphQL.Root
                 },
                 resolve: async (context) =>
                 {
-                    try
-                    {
-                        var age = context.GetArgument<int?>("age");
-                        var name = context.GetArgument<String>("name");
-                        var limit = context.GetArgument<int?>("limit");
-                        var page = context.GetArgument<int?>("page");
+                    var age = context.GetArgument<int?>("age");
+                    var name = context.GetArgument<String>("name");
+                    var limit = context.GetArgument<int?>("limit");
+                    var page = context.GetArgument<int?>("page");
 
-                        var query = new Features.User.SearchMany.Query();
-                        query.Age = age ?? query.Age;
-                        query.Name = name ?? query.Name;
-                        query.Limit = limit ?? query.Limit;
-                        query.Page = page ?? query.Page;
+                    var query = new Features.User.SearchMany.Query();
+                    query.Age = age ?? query.Age;
+                    query.Name = name ?? query.Name;
+                    query.Limit = limit ?? query.Limit;
+                    query.Page = page ?? query.Page;
 
-                        return await mediator.Send(query);
-                    }
-                    catch (Exception ex)
-                    {
-                        context.Errors.Add(new ExecutionError(ex.Message, ex));
-                        return null;
-                    }
+                    return await mediator.Send(query);
                 });
 
             FieldAsync<UserType>(
@@ -79,15 +71,12 @@ namespace CQRSTemplate.GraphQL.Root
                 ),
                 resolve: async (context) =>
                 {
-                    try
+                    var userId = context.GetArgument<Guid>("id");
+                    return await mediator.Send(new Features.User.SearchOne.Query()
                     {
-                        var userId = context.GetArgument<Guid>("id");
-                        return await mediator.Send(new Features.User.SearchOne.Query()
-                        {
-                            Id = userId
-                        });
-                    }
-                    catch { return null; }
+                        Id = userId
+                    });
+
                 });
             #endregion
 
@@ -126,24 +115,20 @@ namespace CQRSTemplate.GraphQL.Root
                 },
                 resolve: async (context) =>
                 {
-                    try
-                    {
-                        var userId = context.GetArgument<Guid?>("userId");
-                        var title = context.GetArgument<string>("title");
-                        var content = context.GetArgument<string>("content");
-                        var limit = context.GetArgument<int?>("limit");
-                        var page = context.GetArgument<int?>("page");
+                    var userId = context.GetArgument<Guid?>("userId");
+                    var title = context.GetArgument<string>("title");
+                    var content = context.GetArgument<string>("content");
+                    var limit = context.GetArgument<int?>("limit");
+                    var page = context.GetArgument<int?>("page");
 
-                        var query = new Features.Message.SearchMany.Query();
-                        query.UserId = userId ?? query.UserId;
-                        query.Title = title ?? query.Title;
-                        query.Content = content ?? query.Content;
-                        query.Limit = limit ?? query.Limit;
-                        query.Page = page ?? query.Page;
+                    var query = new Features.Message.SearchMany.Query();
+                    query.UserId = userId ?? query.UserId;
+                    query.Title = title ?? query.Title;
+                    query.Content = content ?? query.Content;
+                    query.Limit = limit ?? query.Limit;
+                    query.Page = page ?? query.Page;
 
-                        return await mediator.Send(query);
-                    }
-                    catch { return null; }
+                    return await mediator.Send(query);
                 });
             #endregion
         }

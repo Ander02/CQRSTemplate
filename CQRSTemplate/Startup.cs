@@ -29,6 +29,7 @@ namespace CQRSTemplate
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            #region Application Config
             services.AddMvc((options) =>
             {
                 options.Filters.Add(typeof(ValidationActionFilter));
@@ -41,24 +42,30 @@ namespace CQRSTemplate
                 options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
             });
 
-            //Dababase Injection
+            services.AddCors();
+            services.AddMediatR(typeof(Startup));
+            #endregion
+
+            #region Database Injection
             services.AddDbContext<Db>((options) =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-
-            services.AddCors();
-            services.AddMediatR(typeof(Startup));
-
-            //GraphQL Dependency Injection
+            #endregion
+            
+            #region GraphQL Dependency Injection
+            //Types
             services.AddTransient<UserType>();
             services.AddTransient<MessageType>();
 
+            //Input Types
             services.AddTransient<UserInputType>();
 
+            //Roots
             services.AddScoped<RootQuery>();
             services.AddScoped<RootMutation>();
 
+            //Schema
             services.AddScoped<IDocumentExecuter, DocumentExecuter>();
             var servicesProvider = services.BuildServiceProvider();
             services.AddScoped<ISchema>(schema => new GraphQLSchema(type => (GraphType)servicesProvider.GetService(type))
@@ -66,7 +73,7 @@ namespace CQRSTemplate
                 Query = servicesProvider.GetService<RootQuery>(),
                 Mutation = servicesProvider.GetService<RootMutation>()
             });
-
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,10 +84,14 @@ namespace CQRSTemplate
                 app.UseDeveloperExceptionPage();
             }
 
-            //Cors Config
+            #region Cors Config
             app.UseCors(builder => builder.AllowAnyOrigin().WithMethods(new string[] { "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS" }).AllowAnyHeader());
+            #endregion
 
+            #region Middlewares
             app.UseMiddleware<HttpExceptionHandlerMiddleware>();
+            #endregion
+
             app.UseMvc();
         }
     }

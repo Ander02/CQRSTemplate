@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CQRSTemplate.Infraestructure.Database;
+using CQRSTemplate.Infraestructure.Exceptions;
 
 namespace CQRSTemplate.Features.Message
 {
@@ -40,11 +41,15 @@ namespace CQRSTemplate.Features.Message
 
             protected override async Task<MessageViews.FullResult> HandleCore(Command command)
             {
+                var user = await db.Users.FindAsync(command.UserId);
+
+                if (user == null) throw new BadRequestException("Usuário com o Id " + command.UserId + " não existe");
+
                 var message = new Domain.Message()
                 {
                     Title = command.Title,
                     Content = command.Content,
-                    User = await db.Users.FindAsync(command.UserId)
+                    User = user
                 };
 
                 await db.Messages.AddAsync(message);

@@ -10,7 +10,7 @@ namespace CQRSTemplate.Features.User
 {
     public class Register
     {
-        public class Command : IRequest<UserViews.SimpleResult>
+        public class Command : IRequest<UserViews.FullResult>
         {
             public int Age { get; set; }
             public string Name { get; set; }
@@ -26,17 +26,17 @@ namespace CQRSTemplate.Features.User
                 RuleFor(q => q.Name).NotNull().NotEmpty();
                 RuleFor(q => q.Email).NotNull().NotEmpty().EmailAddress();
 
-                  /*.Custom((value, context) =>
-                  {
-                      var user = db.Users.Where(u => u.Email.Equals(value)).FirstOrDefault();
+                /*.Custom((value, context) =>
+                {
+                    var user = db.Users.Where(u => u.Email.Equals(value)).FirstOrDefault();
 
-                      if (user != null) context.AddFailure("Email repetido");
+                    if (user != null) context.AddFailure("Email repetido");
 
-                  });*/
+                });*/
             }
         }
 
-        public class Handler : AsyncRequestHandler<Command, UserViews.SimpleResult>
+        public class Handler : AsyncRequestHandler<Command, UserViews.FullResult>
         {
             private readonly Db db;
 
@@ -45,7 +45,7 @@ namespace CQRSTemplate.Features.User
                 this.db = db;
             }
 
-            protected override async Task<UserViews.SimpleResult> HandleCore(Command command)
+            protected override async Task<UserViews.FullResult> HandleCore(Command command)
             {
                 var user = new Domain.User()
                 {
@@ -58,7 +58,7 @@ namespace CQRSTemplate.Features.User
 
                 await db.SaveChangesAsync();
 
-                return new UserViews.SimpleResult(user);
+                return new UserViews.FullResult(user);
             }
         }
     }

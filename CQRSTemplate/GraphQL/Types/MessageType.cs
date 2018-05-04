@@ -17,14 +17,10 @@ namespace CQRSTemplate.GraphQL.Types
                 description: "The user with send the message",
                 resolve: async (context) =>
                 {
-                    try
+                    return await mediator.Send(new Features.User.SearchOne.Query()
                     {
-                        return await mediator.Send(new Features.User.SearchOne.Query()
-                        {
-                            Id = context.Source.User.Id
-                        });
-                    }
-                    catch { return null; }
+                        Id = context.Source.User.Id
+                    });
                 });
         }
     }
