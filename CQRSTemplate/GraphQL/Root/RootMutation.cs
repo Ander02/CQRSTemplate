@@ -19,7 +19,7 @@ namespace CQRSTemplate.GraphQL.Root
             this.Name = "Mutation";
             this.Description = "The system root mutation";
 
-            #region User
+            #region Users Mutations
             //Add User
             FieldAsync<UserType>(
                 name: "addUser",
@@ -48,6 +48,31 @@ namespace CQRSTemplate.GraphQL.Root
                     var result = await mediator.Send(input);
 
                     return result;
+                });
+
+            FieldAsync<BooleanGraphType>(
+                name: "removeUser",
+                description: "This mutation add a user",
+                arguments: new QueryArguments
+                {
+                    new QueryArgument<NonNullGraphType<IdGraphType>>()
+                    {
+                        Name = "Id",
+                        Description = "A user id"
+                    }
+                },
+                resolve: async (context) =>
+                {
+                    var id = context.GetArgument<Guid>("Id");
+
+                    var command = new Delete.Command()
+                    {
+                        Id = id
+                    };
+
+                    await mediator.Send(command);
+
+                    return true;
                 });
             #endregion
         }
