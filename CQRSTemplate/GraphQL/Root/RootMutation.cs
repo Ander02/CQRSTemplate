@@ -1,5 +1,6 @@
 ﻿using CQRSTemplate.Features.User;
 using CQRSTemplate.GraphQL.InputType;
+using CQRSTemplate.GraphQL.InputType.Mutations;
 using CQRSTemplate.GraphQL.Types;
 using GraphQL;
 using GraphQL.Types;

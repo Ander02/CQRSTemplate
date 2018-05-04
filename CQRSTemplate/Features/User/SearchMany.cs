@@ -15,8 +15,8 @@ namespace CQRSTemplate.Features.User
     {
         public class Query : IRequest<List<UserViews.FullResult>>
         {
-            public string Name { get; set; } = "";
-            public int Age { get; set; }
+            public string Name { get; set; }
+            public int? Age { get; set; }
             public int Limit { get; set; } = 100;
             public int Page { get; set; } = 0;
         }
@@ -38,14 +38,14 @@ namespace CQRSTemplate.Features.User
             {
                 this.db = db;
             }
-            
+
             protected override async Task<List<UserViews.FullResult>> HandleCore(Query query)
             {
                 var q = db.Users.Include(u => u.Messages).AsQueryable();
 
                 if (query.Name != null && query.Name.NotEquals("")) q = q.Where(u => u.Name.Contains(query.Name));
 
-                if (query.Age > 0) q = q = q.Where(u => u.Age == query.Age);
+                if (query.Age.HasValue && query.Age.Value > 0) q = q = q.Where(u => u.Age == query.Age.Value);
 
                 q = q.OrderBy(u => u.Name);
                 q = q.Skip(query.Limit * query.Page).Take(query.Limit);

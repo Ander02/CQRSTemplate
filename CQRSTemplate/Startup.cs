@@ -9,11 +9,12 @@ using CQRSTemplate.Infraestructure.Filters;
 using CQRSTemplate.Infraestructure.Middlewares;
 using GraphQL;
 using GraphQL.Types;
+using CQRSTemplate.GraphQL;
 using CQRSTemplate.GraphQL.Types;
-using CQRSTemplate.GraphQL.Schemas;
 using CQRSTemplate.GraphQL.Root;
 using CQRSTemplate.Infraestructure.Database;
-using CQRSTemplate.GraphQL.InputType;
+using CQRSTemplate.GraphQL.InputType.Mutations;
+using CQRSTemplate.GraphQL.InputType.Querys;
 
 namespace CQRSTemplate
 {
@@ -46,20 +47,24 @@ namespace CQRSTemplate
             services.AddMediatR(typeof(Startup));
             #endregion
 
-            #region Database Injection
+            #region Database Config
             services.AddDbContext<Db>((options) =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
             #endregion
             
-            #region GraphQL Dependency Injection
+            #region GraphQL Config
             //Types
             services.AddTransient<UserType>();
             services.AddTransient<MessageType>();
 
-            //Input Types
+            //Mutation Input Types
             services.AddTransient<UserInputType>();
+            services.AddTransient<MessageInputType>();
+
+            //Querys Input Type
+            services.AddTransient<SearchUserInputType>();
 
             //Roots
             services.AddScoped<RootQuery>();
@@ -88,7 +93,7 @@ namespace CQRSTemplate
             app.UseCors(builder => builder.AllowAnyOrigin().WithMethods(new string[] { "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS" }).AllowAnyHeader());
             #endregion
 
-            #region Middlewares
+            #region Middlewares Config
             app.UseMiddleware<HttpExceptionHandlerMiddleware>();
             #endregion
 

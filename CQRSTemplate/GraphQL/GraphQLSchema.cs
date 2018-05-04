@@ -4,7 +4,7 @@ using CQRSTemplate.GraphQL.Types;
 using GraphQL.Types;
 using System;
 
-namespace CQRSTemplate.GraphQL.Schemas
+namespace CQRSTemplate.GraphQL
 {
     public class GraphQLSchema : Schema
     {
@@ -12,8 +12,7 @@ namespace CQRSTemplate.GraphQL.Schemas
         {
             //Roots
             Query = (RootQuery)resolve(typeof(RootQuery));
-            Mutation = (RootMutation)resolve(typeof(RootMutation));          
-
+            Mutation = (RootMutation)resolve(typeof(RootMutation));
         }
     }
 }

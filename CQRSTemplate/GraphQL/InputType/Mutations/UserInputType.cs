@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.GraphQL.InputType
+namespace CQRSTemplate.GraphQL.InputType.Mutations
 {
     public class UserInputType : InputObjectGraphType
     {

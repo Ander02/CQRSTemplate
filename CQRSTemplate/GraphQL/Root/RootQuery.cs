@@ -1,4 +1,5 @@
 ﻿using CQRSTemplate.Features;
+using CQRSTemplate.GraphQL.InputType.Querys;
 using CQRSTemplate.GraphQL.Types;
 using GraphQL;
 using GraphQL.Types;
@@ -15,63 +16,43 @@ namespace CQRSTemplate.GraphQL.Root
         {
             this.Name = "Query";
 
-            #region Users
+            #region Users Querys
+            //Search Many Users
             FieldAsync<ListGraphType<UserType>>(
 
                 name: "Users",
                 description: "The system's users",
                 arguments: new QueryArguments()
                 {
-                    new QueryArgument<IntGraphType>
+                    new QueryArgument<SearchUserInputType>()
                     {
-                        Name = "age",
-                        Description = "users age"
-                    },
-                    new QueryArgument<StringGraphType>
-                    {
-                        Name = "name",
-                        Description = "users name"
-                    },
-                    new QueryArgument<IntGraphType>
-                    {
-                        Name = "limit",
-                        Description = "limit of users"
-                    },
-                    new QueryArgument<IntGraphType>
-                    {
-                        Name = "page",
-                        Description = "data page"
-                    },
+                        Name = "Params",
+                        Description = "Parameters of search"
+                    }
                 },
                 resolve: async (context) =>
                 {
-                    var age = context.GetArgument<int?>("age");
-                    var name = context.GetArgument<String>("name");
-                    var limit = context.GetArgument<int?>("limit");
-                    var page = context.GetArgument<int?>("page");
+                    var query = context.GetArgument<Features.User.SearchMany.Query>("Params");
 
-                    var query = new Features.User.SearchMany.Query();
-                    query.Age = age ?? query.Age;
-                    query.Name = name ?? query.Name;
-                    query.Limit = limit ?? query.Limit;
-                    query.Page = page ?? query.Page;
+                    if (query != null) return await mediator.Send(query);
 
-                    return await mediator.Send(query);
+                    else return await mediator.Send(new Features.User.SearchMany.Query());
                 });
 
+            //Search One User
             FieldAsync<UserType>(
                 name: "User",
                 description: "A system user",
                 arguments: new QueryArguments(
                     new QueryArgument<IdGraphType>
                     {
-                        Name = "id",
-                        Description = "id of the human"
+                        Name = "Id",
+                        Description = "The user id"
                     }
                 ),
                 resolve: async (context) =>
                 {
-                    var userId = context.GetArgument<Guid>("id");
+                    var userId = context.GetArgument<Guid>("Id");
                     return await mediator.Send(new Features.User.SearchOne.Query()
                     {
                         Id = userId
@@ -80,55 +61,43 @@ namespace CQRSTemplate.GraphQL.Root
                 });
             #endregion
 
-            #region Message
+            #region Messages Querys
+            //Search Many Messages
             FieldAsync<ListGraphType<MessageType>>(
 
                 name: "Messages",
                 description: "The system's messages",
                 arguments: new QueryArguments()
                 {
-                    new QueryArgument<IdGraphType>
+                    new QueryArgument<SearchUserInputType>
                     {
-                        Name = "userId",
-                        Description = "the user id"
-                    },
-                    new QueryArgument<StringGraphType>
-                    {
-                        Name = "title",
-                        Description = "the message title"
-                    },
-                    new QueryArgument<StringGraphType>
-                    {
-                        Name = "content",
-                        Description = "The message content"
-                    },
-                    new QueryArgument<IntGraphType>
-                    {
-                        Name = "limit",
-                        Description = "limit of messages"
-                    },
-                    new QueryArgument<IntGraphType>
-                    {
-                        Name = "page",
-                        Description = "data page"
+                        Name = "Params",
+                        Description = "The search message params"
                     }
                 },
                 resolve: async (context) =>
                 {
+                    /*
                     var userId = context.GetArgument<Guid?>("userId");
                     var title = context.GetArgument<string>("title");
                     var content = context.GetArgument<string>("content");
                     var limit = context.GetArgument<int?>("limit");
                     var page = context.GetArgument<int?>("page");
+                    */
 
-                    var query = new Features.Message.SearchMany.Query();
+                    /*
                     query.UserId = userId ?? query.UserId;
                     query.Title = title ?? query.Title;
                     query.Content = content ?? query.Content;
                     query.Limit = limit ?? query.Limit;
                     query.Page = page ?? query.Page;
+                    */
 
-                    return await mediator.Send(query);
+                    var query = context.GetArgument<Features.Message.SearchMany.Query>("Params");
+
+                    if (query != null) return await mediator.Send(query);
+
+                    else return await mediator.Send(new Features.Message.SearchMany.Query());
                 });
             #endregion
         }

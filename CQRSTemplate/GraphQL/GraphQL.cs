@@ -8,7 +8,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.GraphQL.Controller
+namespace CQRSTemplate.GraphQL
 {
     public class GraphQL
     {
@@ -48,7 +48,8 @@ namespace CQRSTemplate.GraphQL.Controller
                 var result = await documentExecuter.ExecuteAsync(new ExecutionOptions
                 {
                     Schema = this.schema,
-                    Query = query.Query
+                    Query = query.Query,
+                    Inputs = query.Variables.ToInputs()
                 }).ConfigureAwait(false);
 
                 //if (result.Errors?.Count > 0) throw new BadRequestException(JsonConvert.SerializeObject(result));

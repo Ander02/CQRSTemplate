@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace CQRSTemplate.GraphQL.Controller
+namespace CQRSTemplate.GraphQL
 {
     [Route("[controller]")]
     public class GraphQLController : Microsoft.AspNetCore.Mvc.Controller
