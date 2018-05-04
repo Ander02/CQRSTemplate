@@ -11,6 +11,7 @@ namespace CQRSTemplate.GraphQL.InputType.Mutations
         public MessageInputType()
         {
             this.Name = "MessageInputType";
+
             Field<NonNullGraphType<IdGraphType>>("UserId");
             Field<NonNullGraphType<StringGraphType>>("Title");
             Field<NonNullGraphType<StringGraphType>>("Content");

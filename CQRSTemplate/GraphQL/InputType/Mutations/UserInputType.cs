@@ -11,6 +11,7 @@ namespace CQRSTemplate.GraphQL.InputType.Mutations
         public UserInputType()
         {
             this.Name = "UserInputType";
+
             Field<NonNullGraphType<StringGraphType>>("Name");
             Field<NonNullGraphType<IntGraphType>>("Age");
             Field<NonNullGraphType<StringGraphType>>("Email");

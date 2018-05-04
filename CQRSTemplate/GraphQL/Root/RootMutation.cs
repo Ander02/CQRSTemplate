@@ -20,6 +20,7 @@ namespace CQRSTemplate.GraphQL.Root
             this.Description = "The system root mutation";
 
             #region User
+            //Add User
             FieldAsync<UserType>(
                 name: "addUser",
                 description: "This mutation add a user",
@@ -33,16 +34,18 @@ namespace CQRSTemplate.GraphQL.Root
                 },
                 resolve: async (context) =>
                 {
-                    var input = context.GetArgument<UserViews.FullResult>("Input");
+                    var input = context.GetArgument<Register.Command>("Input");
 
+                    /*
                     Register.Command command = new Register.Command()
                     {
                         Age = input.Age,
                         Email = input.Email,
                         Name = input.Name
                     };
+                    */
 
-                    var result = await mediator.Send(command);
+                    var result = await mediator.Send(input);
 
                     return result;
                 });

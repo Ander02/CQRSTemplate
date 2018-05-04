@@ -10,7 +10,7 @@ namespace CQRSTemplate.GraphQL.InputType.Querys
     {
         public SearchMessageInputType()
         {
-            this.Name = "SearchUserInputType";
+            this.Name = "SearchMessageInputType";
             Field<IntGraphType>("Limit");
             Field<IntGraphType>("Page");
             Field<IdGraphType>("UserId");
