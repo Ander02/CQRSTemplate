@@ -1,12 +1,9 @@
-﻿using FluentValidation;
-using MediatR;
-using CQRSTemplate.Infraestructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CQRSTemplate.Infraestructure.Database;
+﻿using CQRSTemplate.Infraestructure.Database;
 using CQRSTemplate.Infraestructure.Exceptions;
+using FluentValidation;
+using MediatR;
+using System;
+using System.Threading.Tasks;
 
 namespace CQRSTemplate.Features.Message
 {

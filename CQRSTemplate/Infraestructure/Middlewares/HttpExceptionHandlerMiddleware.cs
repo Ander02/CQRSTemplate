@@ -1,11 +1,9 @@
 ﻿using CQRSTemplate.Infraestructure.Exceptions;
+using CQRSTemplate.Util;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using System;
 using System.Data.SqlClient;
-using System.Text;
 using System.Threading.Tasks;
-using CQRSTemplate.Util;
 
 namespace CQRSTemplate.Infraestructure.Middlewares
 {

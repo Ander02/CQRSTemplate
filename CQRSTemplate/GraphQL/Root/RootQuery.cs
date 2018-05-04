@@ -1,7 +1,5 @@
-﻿using CQRSTemplate.Features;
-using CQRSTemplate.GraphQL.InputType.Querys;
+﻿using CQRSTemplate.GraphQL.InputType.Querys;
 using CQRSTemplate.GraphQL.Types;
-using GraphQL;
 using GraphQL.Types;
 using MediatR;
 using System;

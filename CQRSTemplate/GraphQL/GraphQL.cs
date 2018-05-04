@@ -1,11 +1,8 @@
-﻿using CQRSTemplate.Infraestructure.Exceptions;
-using FluentValidation;
+﻿using FluentValidation;
 using GraphQL;
 using GraphQL.Types;
 using MediatR;
-using Newtonsoft.Json;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CQRSTemplate.GraphQL

@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CQRSTemplate.Infraestructure.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
-using CQRSTemplate.Infraestructure.Exceptions;
 using System.Linq;
 
 namespace CQRSTemplate.Infraestructure.Filters

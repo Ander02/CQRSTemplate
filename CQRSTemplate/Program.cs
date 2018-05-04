@@ -1,11 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CQRSTemplate.Infraestructure.Database;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
-using CQRSTemplate.Infraestructure.Database;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CQRSTemplate
 {

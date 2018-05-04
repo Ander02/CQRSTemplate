@@ -1,6 +1,4 @@
-﻿using CQRSTemplate.GraphQL.InputType;
-using CQRSTemplate.GraphQL.Root;
-using CQRSTemplate.GraphQL.Types;
+﻿using CQRSTemplate.GraphQL.Root;
 using GraphQL.Types;
 using System;
 

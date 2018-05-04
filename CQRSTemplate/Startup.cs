@@ -1,20 +1,20 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-using MediatR;
-using FluentValidation.AspNetCore;
-using CQRSTemplate.Infraestructure.Filters;
-using CQRSTemplate.Infraestructure.Middlewares;
-using GraphQL;
-using GraphQL.Types;
-using CQRSTemplate.GraphQL;
-using CQRSTemplate.GraphQL.Types;
-using CQRSTemplate.GraphQL.Root;
-using CQRSTemplate.Infraestructure.Database;
+﻿using CQRSTemplate.GraphQL;
 using CQRSTemplate.GraphQL.InputType.Mutations;
 using CQRSTemplate.GraphQL.InputType.Querys;
+using CQRSTemplate.GraphQL.Root;
+using CQRSTemplate.GraphQL.Types;
+using CQRSTemplate.Infraestructure.Database;
+using CQRSTemplate.Infraestructure.Filters;
+using CQRSTemplate.Infraestructure.Middlewares;
+using FluentValidation.AspNetCore;
+using GraphQL;
+using GraphQL.Types;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CQRSTemplate
 {

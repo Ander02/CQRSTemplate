@@ -1,13 +1,11 @@
-﻿using FluentValidation;
+﻿using CQRSTemplate.Infraestructure.Database;
+using CQRSTemplate.Util;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using CQRSTemplate.Infraestructure;
-using CQRSTemplate.Util;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CQRSTemplate.Infraestructure.Database;
 
 namespace CQRSTemplate.Features.User
 {

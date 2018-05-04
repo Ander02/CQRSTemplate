@@ -1,14 +1,9 @@
 ﻿using CQRSTemplate.Features.User;
-using CQRSTemplate.GraphQL.InputType;
 using CQRSTemplate.GraphQL.InputType.Mutations;
 using CQRSTemplate.GraphQL.Types;
-using GraphQL;
 using GraphQL.Types;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CQRSTemplate.GraphQL.Root
 {
