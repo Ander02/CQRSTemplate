@@ -9,7 +9,7 @@ namespace CQRSTemplate.GraphQL
 {
     public class GraphQL
     {
-        public class GQuery : IRequest<ExecutionResult>
+        public class GraphQuery : IRequest<ExecutionResult>
         {
             public string OperationName { get; set; }
             public string NamedQuery { get; set; }
@@ -19,7 +19,7 @@ namespace CQRSTemplate.GraphQL
             public override string ToString() => Newtonsoft.Json.JsonConvert.SerializeObject(this);
         }
 
-        public class CommandValidator : AbstractValidator<GQuery>
+        public class CommandValidator : AbstractValidator<GraphQuery>
         {
             public CommandValidator()
             {
@@ -27,7 +27,7 @@ namespace CQRSTemplate.GraphQL
             }
         }
 
-        public class Handler : AsyncRequestHandler<GQuery, ExecutionResult>
+        public class Handler : AsyncRequestHandler<GraphQuery, ExecutionResult>
         {
             private readonly ISchema schema;
             private readonly IDocumentExecuter documentExecuter;
@@ -38,15 +38,15 @@ namespace CQRSTemplate.GraphQL
                 this.documentExecuter = documentExecuter;
             }
 
-            protected override async Task<ExecutionResult> HandleCore(GQuery query)
+            protected override async Task<ExecutionResult> HandleCore(GraphQuery graphQuery)
             {
-                if (query == null) throw new ArgumentNullException(nameof(query));
+                if (graphQuery == null) throw new ArgumentNullException(nameof(graphQuery));
 
                 var result = await documentExecuter.ExecuteAsync(new ExecutionOptions
                 {
                     Schema = this.schema,
-                    Query = query.Query,
-                    Inputs = query.Variables.ToInputs()
+                    Query = graphQuery.Query,
+                    Inputs = graphQuery.Variables.ToInputs()
                 }).ConfigureAwait(false);
 
                 //if (result.Errors?.Count > 0) throw new BadRequestException(JsonConvert.SerializeObject(result));

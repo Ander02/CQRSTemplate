@@ -16,7 +16,7 @@ namespace CQRSTemplate.GraphQL
         }
 
         [HttpPost]
-        public async Task<ExecutionResult> Post([FromBody] GraphQL.GQuery query)
+        public async Task<ExecutionResult> Post([FromBody] GraphQL.GraphQuery query)
         {
             var result = await this.mediator.Send(query);
 
